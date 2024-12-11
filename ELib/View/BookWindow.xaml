@@ -1,0 +1,55 @@
+﻿<Window x:Class="ELib.View.BookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ELib.View"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="BookWindow" Height="650" Width="1000">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Margin" Value="0,20,0,0"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+        </Style>
+    </Window.Resources>
+        <DockPanel LastChildFill="True">
+        <StackPanel  DockPanel.Dock="Right" Background="#008110">
+            <Label Content ="BookShelf" HorizontalAlignment="Center" FontSize="24" Margin="0,30,0,0" Foreground="White"/>
+            <StackPanel Name="MenuButtons" Margin="0,30,0,0">
+                <Button Content="Читать" Foreground="LightGray">
+                </Button>
+                <Button Content="Оценить" Foreground="LightGray">
+                </Button>
+                <Button Content="Добавить в Избранное" Foreground="LightGray">
+                </Button>
+                <Button Content="Назад" Foreground="LightGray">
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel DockPanel.Dock="Left" Width="420">
+            <Image Source="/Images/1.png"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Margin="20"/>
+        </StackPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock Text="Обломов" FontWeight="Bold"/>
+                <TextBlock Text="Автор: Иван Гончаров" />
+                <TextBlock Text="Дата выхода: 1859 г." />
+                <TextBlock Text="Жанр: Классика" />
+                <TextBlock Text="Рейтинг: 5/5" />
+                <TextBlock
+                           Text="«Обломов» Гончарова - «золотая классика» русской литературы. Оригинальная, неоднозначная книга, которую считают и эталоном критического реализма, и романом откровенно сатирическим… Но все критики единодушны в том, что «Обломов» – гениальнейшее и блистательнейшее явление отечественной прозы, явление, не утратившее своего значения и в наши дни!.."/>
+                <TextBlock Text="Отзывы:"/>
+                <Border BorderBrush="Gray" BorderThickness="2" CornerRadius="5" Padding="10" Margin="10">
+                <StackPanel>
+                    <TextBlock Text="BookReader27" FontWeight="Bold"/>
+                    <TextBlock Text="Оценка: 5"/>
+                    <TextBlock Text="Любимое произведение отечественной классики"/>
+                </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>
