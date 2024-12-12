@@ -1,0 +1,85 @@
+﻿<Page x:Class="ELib.View.Pages.AccountPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:local="clr-namespace:ELib.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="1000"
+      Title="AccountPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Name ="AccountContr" DockPanel.Dock="Left" VerticalScrollBarVisibility="Auto" Grid.Column="0">
+            <StackPanel>
+                <Label Content="Аккаунт:" FontWeight="Bold" FontSize="20"/>
+                <StackPanel Margin="0,10">
+                    <Label  Content="Логин:" Margin="0,5"/>
+                    <TextBox Text="{Binding CurrentUser.login}" Width="250" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Margin="0,10">
+                    <Label  Content="Имя:" Margin="0,5"/>
+                    <TextBox Text="{Binding CurrentUser.name}" Width="250" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Margin="0,10">
+                    <Label  Content="Фамилия:" Margin="0,5"/>
+                    <TextBox Text="{Binding CurrentUser.surname}" Width="250" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Margin="0,10">
+                    <Label  Content="Эл.Почта:" Margin="0,5"/>
+                    <TextBox Text="{Binding CurrentUser.e_mail}" Width="250" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <!--<StackPanel Margin="0,10">
+                    <Label  Content="Пароль:" Margin="0,5"/>
+                    <PasswordBox Width="250" HorizontalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Margin="0,10">
+                    <Label  Content="Подтвердите пароль:" Margin="0,5"/>
+                    <PasswordBox Width="250" HorizontalAlignment="Center"/>
+                </StackPanel>-->
+                <materialDesign:Snackbar MessageQueue="{Binding SnackbarMessageQueue}" />
+                <Button Content="Сохранить изменения" Command="{Binding ChangeCommand}" Foreground="LightGray" HorizontalAlignment="Center" Cursor="">
+                </Button>
+            </StackPanel>
+        </ScrollViewer >
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <Label Content="Тарифы:" FontWeight="Bold" FontSize="20" HorizontalAlignment="Center"/>
+                <ListBox ItemsSource="{Binding TariffPreviews}" Margin="0,10">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontSize="16"/>
+                                <TextBlock Text="{Binding Price, StringFormat='Цена: {0} у.е.'}" FontSize="14"/>
+
+                                <Button Content="Оформить" 
+                                        Visibility="{Binding ButtonVisibility}" 
+                                        Command="{Binding DataContext.SetTariffCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}"
+                                        HorizontalAlignment="Center"/>
+
+                                <TextBlock Text="{Binding EndDate, StringFormat='До: {0:dd.MM.yyyy}'}" 
+                                           Visibility="{Binding DateVisibility}" 
+                                           FontSize="14" 
+                                           Foreground="Gray" 
+                                           HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+        <StackPanel Grid.Column="2" DockPanel.Dock="Right" Background="#008110">
+            <Label Content ="BookShelf" HorizontalAlignment="Center" FontSize="24" Margin="0,30,0,0" Foreground="White"/>
+            <StackPanel x:Name="MenuButtons" Margin="0,30,0,0">
+                <Button Content="Назад" Foreground="LightGray">
+                </Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

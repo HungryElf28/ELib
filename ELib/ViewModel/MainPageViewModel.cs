@@ -18,6 +18,7 @@ namespace ELib.ViewModel
         private IBookService _bookService;
         private IUserSession _userSession;
         public ICommand OpenBookPageCommand { get; }
+        public ICommand OpenAccountPageCommand { get; }
         private List<GenreDto> _genreList;
         private ObservableCollection<MainBooksListDto> _mainBooksList;
         private string _userLogin;
@@ -48,6 +49,7 @@ namespace ELib.ViewModel
             _userSession = userSession;
             _navigationViewModel = navigationViewModel;
             OpenBookPageCommand = new RelayCommand(OpenBookPage);
+            OpenAccountPageCommand = new RelayCommand(OpenAccountPage);
             MainBooksList = new ObservableCollection<MainBooksListDto>();
             UserLogin = _userSession.CurrentUser.login;
             LoadBooks();
@@ -77,6 +79,10 @@ namespace ELib.ViewModel
             var book = parameter as BookPreviewDto;
             _bookService.SetCurrentBook(book.id);
             _navigationViewModel.OpenBookPageCommand.Execute(book);
+        }
+        private void OpenAccountPage(object parameter)
+        {
+            _navigationViewModel.OpenAccountPageCommand.Execute(parameter);
         }
     }
 }

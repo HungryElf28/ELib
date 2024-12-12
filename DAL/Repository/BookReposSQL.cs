@@ -11,9 +11,9 @@ namespace DAL.Repository
 {
     public class BookReposSQL: IRepository<books>
     {
-        private ELibrary db;
+        private Elib db;
 
-        public BookReposSQL(ELibrary dbcontext)
+        public BookReposSQL(Elib dbcontext)
         {
             this.db = dbcontext;
         }

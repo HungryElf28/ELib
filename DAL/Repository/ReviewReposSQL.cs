@@ -1,4 +1,5 @@
-﻿using DTO;
+﻿using DomainModel;
+using DTO;
 using Interfaces.Services;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace DAL.Repository
 {
     public class ReviewReposSQL : IReviewsRepository
     {
-        private ELibrary db;
+        private Elib db;
 
-        public ReviewReposSQL(ELibrary dbcontext)
+        public ReviewReposSQL(Elib dbcontext)
         {
             this.db = dbcontext;
         }

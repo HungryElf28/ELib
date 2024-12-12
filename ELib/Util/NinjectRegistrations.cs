@@ -20,8 +20,8 @@ namespace ELib.Util
             Bind<IUserService>().To<UserService>().InSingletonScope();
             Bind<IUserSession>().To<UserSession>().InSingletonScope();
             Bind<IBookService>().To<BookService>().InSingletonScope();
-            Bind<INavigationService>().To<NavigationService>().InSingletonScope();
             Bind<IReadingService>().To<ReadingService>().InSingletonScope();
+            Bind<ITariffService>().To<TariffService>().InSingletonScope();
 
         }
     }

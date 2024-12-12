@@ -11,8 +11,8 @@ namespace DAL.Repository
 {
     public class AuthorReposSQL: IRepository<authors>
     {
-        private ELibrary db;
-        public AuthorReposSQL(ELibrary dbcontext)
+        private Elib db;
+        public AuthorReposSQL(Elib dbcontext)
         {
             this.db = dbcontext;
         }

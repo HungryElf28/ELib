@@ -12,7 +12,7 @@ namespace DomainModel
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public users()
         {
-            cards = new HashSet<cards>();
+            offline_book = new HashSet<offline_book>();
             reading_book = new HashSet<reading_book>();
             review = new HashSet<review>();
             user_tariff = new HashSet<user_tariff>();
@@ -45,7 +45,7 @@ namespace DomainModel
         public int bonuses { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<cards> cards { get; set; }
+        public virtual ICollection<offline_book> offline_book { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<reading_book> reading_book { get; set; }

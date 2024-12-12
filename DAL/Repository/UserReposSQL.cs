@@ -11,9 +11,9 @@ namespace DAL.Repository
 {
     public class UserReposSQL: IRepository<users>
     {
-        private ELibrary db;
+        private Elib db;
 
-        public UserReposSQL(ELibrary dbcontext)
+        public UserReposSQL(Elib dbcontext)
         {
             this.db = dbcontext;
         }

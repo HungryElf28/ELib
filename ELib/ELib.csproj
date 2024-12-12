@@ -132,10 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helpers\PasswordBoxHelper.cs" />
     <Compile Include="Navigation\NavigationService.cs" />
     <Compile Include="Util\NinjectRegistrations.cs" />
     <Compile Include="Util\ReposModule.cs" />
+    <Compile Include="ViewModel\AccountPageViewModel.cs" />
     <Compile Include="ViewModel\BookPageViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
@@ -152,6 +152,9 @@
     </Compile>
     <Compile Include="View\MakeReportWindow.xaml.cs">
       <DependentUpon>MakeReportWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\AccountPage.xaml.cs">
+      <DependentUpon>AccountPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\BookPage.xaml.cs">
       <DependentUpon>BookPage.xaml</DependentUpon>
@@ -203,6 +206,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\MakeReportWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\AccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -271,12 +278,6 @@
       <Project>{40632336-35ac-4587-adae-0d3c4e14999b}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Books\oblomov.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

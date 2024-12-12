@@ -11,8 +11,8 @@ namespace DAL.Repository
 {
     public class GenreReposSQL: IRepository<genres>
     {
-        private ELibrary db;
-        public GenreReposSQL(ELibrary dbcontext)
+        private Elib db;
+        public GenreReposSQL(Elib dbcontext)
         {
             this.db = dbcontext;
         }

@@ -12,7 +12,7 @@ namespace DAL.Repository
 {
     public class DbReposSQL: IDbRepos
     {
-        private ELibrary db;
+        private Elib db;
         private UserReposSQL usersRepos;
         private BookReposSQL booksRepos;
         private GenreReposSQL genreRepos;
@@ -20,9 +20,11 @@ namespace DAL.Repository
         private MainWindowShowReposSQL mainShowRepos;
         private ReviewReposSQL reviewRepos;
         private ReadingReposSQL readingRepos;
+        private TariffReposSQL tariffRepos;
+        private UserTariffReposSQL userTariffRepos;
         public DbReposSQL()
         {
-            db = new ELibrary();
+            db = new Elib();
         }
         public IRepository<users> users
         {
@@ -60,6 +62,15 @@ namespace DAL.Repository
                 return authorRepos;
             }
         }
+        public IRepository<tariff> tariff
+        {
+            get
+            {
+                if (tariffRepos == null)
+                    tariffRepos = new TariffReposSQL(db);
+                return tariffRepos;
+            }
+        }
         public IMainBooksShowRepository showBooks
         {
             get
@@ -85,6 +96,15 @@ namespace DAL.Repository
                 if (readingRepos == null)
                     readingRepos = new ReadingReposSQL(db);
                 return readingRepos;
+            }
+        }
+        public IUserTariffRepository userTariff
+        {
+            get
+            {
+                if (userTariffRepos == null)
+                    userTariffRepos = new UserTariffReposSQL(db);
+                return userTariffRepos;
             }
         }
         public int Save()

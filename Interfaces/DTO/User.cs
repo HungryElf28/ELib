@@ -42,6 +42,7 @@ namespace DTO
             password = us.password;
             name = us.name;
             surname = us.surname;
+            e_mail = us.e_mail;
             bonuses = us.bonuses;
             reg_date = us.reg_date;
         }

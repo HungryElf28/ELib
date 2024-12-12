@@ -13,9 +13,9 @@ namespace DomainModel
         public books()
         {
             review = new HashSet<review>();
+            offline_book = new HashSet<offline_book>();
             reading_book = new HashSet<reading_book>();
             authors = new HashSet<authors>();
-            genres = new HashSet<genres>();
             users = new HashSet<users>();
         }
 
@@ -38,19 +38,24 @@ namespace DomainModel
         [Required]
         [StringLength(8000)]
         public string coverLink { get; set; }
+
         public double? rating { get; set; }
+
+        public int genreid { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<review> review { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<offline_book> offline_book { get; set; }
+
+        public virtual genres genres { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<reading_book> reading_book { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<authors> authors { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<genres> genres { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<users> users { get; set; }

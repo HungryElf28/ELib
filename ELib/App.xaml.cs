@@ -10,6 +10,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Globalization;
+using System.Threading;
 
 namespace ELib
 {
@@ -21,6 +23,11 @@ namespace ELib
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            CultureInfo culture = new CultureInfo("ru-RU");
+            Thread.CurrentThread.CurrentCulture = culture;
+            Thread.CurrentThread.CurrentUICulture = culture;
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
             base.OnStartup(e);
             var kernel = new StandardKernel(new NinjectRegistrations(), new ReposModule());
             var navigationViewModel = new NavigationViewModel(kernel);

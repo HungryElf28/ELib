@@ -10,8 +10,8 @@ namespace DAL.Repository
 {
     public class ReadingReposSQL: IReadingRepository
     {
-        private ELibrary db;
-        public ReadingReposSQL(ELibrary Context)
+        private Elib db;
+        public ReadingReposSQL(Elib Context)
         {
             db = Context;
         }

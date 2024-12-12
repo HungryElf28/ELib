@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 using Interfaces.Services;
 using DomainModel;
 using DTO;
+using Interfaces.Repository;
 
 namespace BLL.Services
 {
     public class UserSession : IUserSession
     {
+        private IDbRepos db;
         public UserDto CurrentUser { get; set; }
         public bool IsAuthenticated { get; set; }
+        public UserSession(IDbRepos db)
+        {
+            this.db = db;
+        }
 
         public void ClearSession()
         {
@@ -31,6 +37,26 @@ namespace BLL.Services
         {
             CurrentUser = new UserDto(user);
             IsAuthenticated = true;
+            //db.userTariff.RemoveExpiredTariffs(CurrentUser.id);
+        }
+        public void UpdateUser(UserDto user)
+        {
+            var CurrUser = db.users.GetAll().FirstOrDefault(u => u.id == user.id);
+            CurrUser.login = user.login;
+            CurrUser.name = user.name;
+            CurrUser.surname = user.surname;
+            CurrUser.e_mail = user.e_mail;
+            db.users.Update(CurrUser);
+            db.Save();
+            CurrentUser = user;
+        }
+        public bool ValidateLogin( int id, string login)
+        {
+            return !db.users.GetAll().Any(u => u.login == login && u.id != id);
+        }
+        public bool ValidateEmail(int id, string email)
+        {
+            return !db.users.GetAll().Any(u => u.e_mail == email && u.id != id);
         }
     }
 }

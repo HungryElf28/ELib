@@ -23,6 +23,7 @@ namespace ELib.ViewModel
         public ICommand OpenMainPageCommand { get; }
         public ICommand OpenBookPageCommand { get; }
         public ICommand OpenReadPageCommand { get; }
+        public ICommand OpenAccountPageCommand { get; }
         public ICommand GoBackCommand { get; }
         private Frame NavFrame;
         public NavigationViewModel(IKernel kernel)
@@ -33,6 +34,7 @@ namespace ELib.ViewModel
             OpenMainPageCommand = new RelayCommand(OpenMainPage);
             OpenBookPageCommand = new RelayCommand(OpenBookPage);
             OpenReadPageCommand = new RelayCommand(OpenReadPage);
+            OpenAccountPageCommand = new RelayCommand(OpenAccountPage);
             GoBackCommand = new RelayCommand(GoBack);
             this.kernel = kernel;
         }
@@ -84,6 +86,12 @@ namespace ELib.ViewModel
             var readPage = new ReadPage();
             readPage.DataContext = new ReadViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>(), kernel.Get<IReadingService>());
             NavFrame.Navigate(readPage);
+        }
+        private void OpenAccountPage(object parameter)
+        {
+            var accountPage = new AccountPage();
+            accountPage.DataContext = new AccountPageViewModel(this, kernel.Get<IUserSession>(), kernel.Get<ITariffService>());
+            NavFrame.Navigate(accountPage);
         }
         private void GoBack(object parameter)
         {

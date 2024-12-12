@@ -15,9 +15,11 @@ namespace Interfaces.Repository
         IRepository<books> books { get; }
         IRepository<genres> genres { get; }
         IRepository<authors> authors { get; }
+        IRepository<tariff> tariff { get; }
         IMainBooksShowRepository showBooks {  get; }
         IReviewsRepository bookReviews { get; }
         IReadingRepository reading {  get; }
+        IUserTariffRepository userTariff {  get; }
         int Save();
     }
  }
