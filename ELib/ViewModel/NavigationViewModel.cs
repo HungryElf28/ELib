@@ -78,7 +78,7 @@ namespace ELib.ViewModel
         private void OpenBookPage(object parameter)
         {
             var bookPage = new BookPage();
-            bookPage.DataContext = new BookPageViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>());
+            bookPage.DataContext = new BookPageViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>(), kernel.Get<ITariffService>());
             NavFrame.Navigate(bookPage);
         }
         private void OpenReadPage(object parameter)

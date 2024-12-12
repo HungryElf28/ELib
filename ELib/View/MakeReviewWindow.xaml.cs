@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace ELib.View
 {
     /// <summary>
-    /// Логика взаимодействия для MakeReportWindow.xaml
+    /// Логика взаимодействия для MakeReviewWindow.xaml
     /// </summary>
-    public partial class MakeReportWindow : Window
+    public partial class MakeReviewWindow : Window
     {
-        public MakeReportWindow()
+        public MakeReviewWindow()
         {
             InitializeComponent();
         }

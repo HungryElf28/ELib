@@ -15,9 +15,31 @@ namespace ELib.ViewModel
     {
         private IBookService _bookService;
         private IUserSession _userSession;
+        private ITariffService _tariffService;
         private NavigationViewModel _navigationViewModel;
         public ICommand GoBackCommand { get; }
         public ICommand ReadBookCommand { get; }
+        private string _readButtonText;
+        public string ReadButtonText
+        {
+            get => _readButtonText;
+            set
+            {
+                _readButtonText = value;
+                NotifyPropertyChanged(nameof(ReadButtonText));
+            }
+        }
+        private bool _isBookAccessible;
+        public bool IsBookAccessible
+        {
+            get => _isBookAccessible;
+            set
+            {
+                _isBookAccessible = value;
+                NotifyPropertyChanged(nameof(IsBookAccessible));
+                ReadButtonText = IsBookAccessible ? "Читать" : "Чтение недоступно по тарифу";
+            }
+        }
         private BookDto _currentBook;
         public BookDto CurrentBook
         {
@@ -43,14 +65,16 @@ namespace ELib.ViewModel
             get => CurrentBook.rating.HasValue ? $"Рейтинг: {CurrentBook.rating:F1}/5" : "Рейтинг: отсутствует";
         }
         public event PropertyChangedEventHandler PropertyChanged;
-        public BookPageViewModel(NavigationViewModel navigationViewModel, IBookService bookService, IUserSession userSession)
+        public BookPageViewModel(NavigationViewModel navigationViewModel, IBookService bookService, IUserSession userSession, ITariffService tariffService)
         {
             GoBackCommand = new RelayCommand(GoBack);
             ReadBookCommand = new RelayCommand(ReadBook);
             _bookService = bookService;
             _userSession = userSession;
+            _tariffService = tariffService;
             _navigationViewModel = navigationViewModel;
             CurrentBook = bookService.CurrentBook;
+            IsBookAccessible = _tariffService.CheckTariff(CurrentBook.id, _userSession.CurrentUser.id);
             LoadReviews();
         }
         private void LoadReviews()
@@ -63,6 +87,7 @@ namespace ELib.ViewModel
         }
         private void ReadBook(object parameter)
         {
+
             _navigationViewModel.OpenReadPageCommand.Execute(parameter);
         }
         private void NotifyPropertyChanged(string propertyName)

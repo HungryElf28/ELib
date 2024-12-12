@@ -140,6 +140,7 @@
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\MainPageViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\MakeReviewViewModel.cs" />
     <Compile Include="ViewModel\NavigationViewModel.cs" />
     <Compile Include="ViewModel\ReadViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
@@ -147,11 +148,11 @@
     <Compile Include="View\AccountControlWindow.xaml.cs">
       <DependentUpon>AccountControlWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\BookWindow.xaml.cs">
-      <DependentUpon>BookWindow.xaml</DependentUpon>
+    <Compile Include="View\MakeFeedbackWindow.xaml.cs">
+      <DependentUpon>MakeFeedbackWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\MakeReportWindow.xaml.cs">
-      <DependentUpon>MakeReportWindow.xaml</DependentUpon>
+    <Compile Include="View\MakeReviewWindow.xaml.cs">
+      <DependentUpon>MakeReviewWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\AccountPage.xaml.cs">
       <DependentUpon>AccountPage.xaml</DependentUpon>
@@ -182,10 +183,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\BookWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\LoginWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -205,7 +202,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\MakeReportWindow.xaml">
+    <Page Include="View\MakeFeedbackWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MakeReviewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

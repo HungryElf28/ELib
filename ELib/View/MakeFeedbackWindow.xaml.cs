@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace ELib.View
 {
     /// <summary>
-    /// Логика взаимодействия для BookWindow.xaml
+    /// Логика взаимодействия для MakeFeedbackWindow.xaml
     /// </summary>
-    public partial class BookWindow : Window
+    public partial class MakeFeedbackWindow : Window
     {
-        public BookWindow()
+        public MakeFeedbackWindow()
         {
             InitializeComponent();
         }

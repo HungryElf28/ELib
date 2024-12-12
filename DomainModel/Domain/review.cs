@@ -9,16 +9,18 @@ namespace DomainModel
     [Table("public.review")]
     public partial class review
     {
-        public int id { get; set; }
-
+        [Key]
+        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int user_id { get; set; }
+        [Key]
+        [Column(Order = 1)]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int book_id { get; set; }
         public int mark { get; set; }
 
         [StringLength(8000)]
         public string reviewText { get; set; }
-
-        public int userId { get; set; }
-
-        public int bookId { get; set; }
 
         public virtual books books { get; set; }
 

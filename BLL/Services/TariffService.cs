@@ -19,8 +19,7 @@ namespace BLL.Services
         }
         public bool CheckTariff(int bkId, int usId)
         {
-            var gnId = db.books
-                    .GetItem(bkId).genreid;
+            var gnId = db.books.GetItem(bkId).genreid;
 
             if (db.userTariff.FindTariff(usId, gnId))
             {

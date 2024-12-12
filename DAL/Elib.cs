@@ -33,7 +33,7 @@ namespace DomainModel
             modelBuilder.Entity<books>()
                 .HasMany(e => e.review)
                 .WithRequired(e => e.books)
-                .HasForeignKey(e => e.bookId);
+                .HasForeignKey(e => e.book_id);
 
             modelBuilder.Entity<books>()
                 .HasMany(e => e.offline_book)
@@ -81,7 +81,7 @@ namespace DomainModel
             modelBuilder.Entity<users>()
                 .HasMany(e => e.review)
                 .WithRequired(e => e.users)
-                .HasForeignKey(e => e.userId);
+                .HasForeignKey(e => e.user_id);
 
             modelBuilder.Entity<users>()
                 .HasMany(e => e.user_tariff)

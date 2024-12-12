@@ -22,7 +22,7 @@
         <StackPanel  DockPanel.Dock="Right" Background="#008110">
             <Label Content ="BookShelf" HorizontalAlignment="Center" FontSize="24" Margin="0,30,0,0" Foreground="White"/>
             <StackPanel Name="MenuButtons" Margin="0,30,0,0">
-                <Button Content="Читать" Foreground="LightGray" Command="{Binding ReadBookCommand}">
+                <Button Content="{Binding ReadButtonText}" Foreground="LightGray" Command="{Binding ReadBookCommand}" IsEnabled="{Binding IsBookAccessible}">
                 </Button>
                 <Button Content="Оценить" Foreground="LightGray">
                 </Button>
