@@ -10,6 +10,5 @@ namespace Interfaces.Repository
     public interface IReadingRepository
     {
         reading_book GetReadingStatus(int usId, int bkId);
-        void Create(reading_book rb);
     }
 }

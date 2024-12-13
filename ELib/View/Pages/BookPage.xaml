@@ -51,14 +51,8 @@
                 </ItemsControl>
                 <TextBlock Text="Год выхода:" FontWeight="Bold"/>
                 <TextBlock Text="{Binding CurrentBook.releaseDate, StringFormat=' {0:yyyy г.}'}" />
-                <TextBlock Text="Жанры:" FontWeight="Bold"/>
-                <ItemsControl ItemsSource="{Binding CurrentBook.genres}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{ Binding genre_name}" Style="{StaticResource NameStyle}" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <TextBlock Text="Жанр:" FontWeight="Bold"/>
+                <TextBlock Text="{ Binding CurrentBook.genreName}" Style="{StaticResource NameStyle}" />
                 <TextBlock Text="{Binding RatingText}" />
                 <TextBlock Text="{Binding CurrentBook.description}"/>
                 <TextBlock Text="Отзывы:" FontWeight="Bold" Margin="0,20,0,10" />

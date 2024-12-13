@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Interfaces.Services;
 using MaterialDesignThemes.Wpf;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace ELib.ViewModel
 {
@@ -74,7 +75,9 @@ namespace ELib.ViewModel
         }
         private void AuthenticateUser(object parameter)
         {
-            PasswordBox passwordBox = parameter as PasswordBox;
+            dynamic parameters = parameter as dynamic;
+            PasswordBox passwordBox = parameters.Password as PasswordBox;
+            Window currWindow = parameters.Window as Window;
             Password = passwordBox.Password;
             if (string.IsNullOrWhiteSpace(Login) || string.IsNullOrWhiteSpace(Password))
             {
@@ -84,7 +87,8 @@ namespace ELib.ViewModel
             {
                 if (_userService.ValidateUser(Login, Password))
                 {
-                    _navigationViewModel.OpenMainWindowCommand.Execute(parameter);
+                    _navigationViewModel.OpenMainWindowCommand.Execute(currWindow);
+
                 }
                 else
                 {

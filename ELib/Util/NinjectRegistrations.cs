@@ -9,7 +9,6 @@ using Interfaces.Repository;
 using Interfaces.Services;
 using Ninject;
 using Ninject.Modules;
-using ELib.Navigation;
 
 namespace ELib.Util
 {

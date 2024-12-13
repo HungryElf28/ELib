@@ -31,10 +31,6 @@ namespace DAL.Repository
             }
             return db.reading_book.Find(usId, bkId);
         }
-        public void Create(reading_book rb)
-        {
-            db.reading_book.Add(rb);
-        }
 
     }
 }

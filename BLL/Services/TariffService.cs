@@ -38,16 +38,13 @@ namespace BLL.Services
         {
             var allTariffs = db.tariff.GetAll().ToList();
 
-            // Получить тарифы пользователя из user_tariff
             var userTariffs = db.userTariff
                 .GetAll()
                 .Where(ut => ut.user_id == usId)
                 .ToList();
 
-            // Создать список превью
             var tariffPreviews = allTariffs.Select(tariff =>
             {
-                // Найти тариф пользователя, если он существует
                 var userTariff = userTariffs.FirstOrDefault(ut => ut.tariff_id == tariff.id);
 
                 return new TariffPreview

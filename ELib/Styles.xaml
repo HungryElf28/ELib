@@ -10,10 +10,15 @@
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
-
-    <!-- Настройка сообщений в Snackbar -->
     <Style TargetType="{x:Type materialDesign:SnackbarMessage}">
         <Setter Property="Foreground" Value="White" />
         <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style  TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
+        <Setter Property="Background" Value="#0dab50" />
+        <Setter Property="Foreground" Value="LightGray" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="BorderBrush" Value="#215537" />
+        <Setter Property="BorderThickness" Value="1" />
     </Style>
 </ResourceDictionary>

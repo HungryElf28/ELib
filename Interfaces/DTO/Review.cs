@@ -12,7 +12,7 @@ namespace DTO
     {
         public int user_id { get; set; }
         public int book_id { get; set; }
-        public int mark { get; set; }
+        public int? mark { get; set; }
 
         [StringLength(8000)]
         public string reviewText { get; set; }

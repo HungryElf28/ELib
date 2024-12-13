@@ -132,7 +132,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Navigation\NavigationService.cs" />
+    <Compile Include="ParameterConverter.cs" />
     <Compile Include="Util\NinjectRegistrations.cs" />
     <Compile Include="Util\ReposModule.cs" />
     <Compile Include="ViewModel\AccountPageViewModel.cs" />
@@ -145,9 +145,6 @@
     <Compile Include="ViewModel\ReadViewModel.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\RelayCommand.cs" />
-    <Compile Include="View\AccountControlWindow.xaml.cs">
-      <DependentUpon>AccountControlWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\MakeFeedbackWindow.xaml.cs">
       <DependentUpon>MakeFeedbackWindow.xaml</DependentUpon>
     </Compile>
@@ -176,10 +173,6 @@
       <DependentUpon>RegisterWindow.xaml</DependentUpon>
     </Compile>
     <Page Include="Styles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\AccountControlWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

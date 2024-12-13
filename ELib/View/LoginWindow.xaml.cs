@@ -24,22 +24,13 @@ namespace ELib.View
         public LoginWindow()
         {
             InitializeComponent();
-            this.Closing += OnWindowClosing;
         }
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            if (DataContext is LoginViewModel viewModel && sender is PasswordBox passwordBox)
-            {
-                viewModel.Password = passwordBox.Password;
-            }
-        }
-
-        private void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (DataContext is LoginViewModel loginViewModel && !loginViewModel.SwitchWindows)
-            {
-                Application.Current.Shutdown();
-            }
-        }
+        //private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        //{
+        //    if (DataContext is LoginViewModel viewModel && sender is PasswordBox passwordBox)
+        //    {
+        //        viewModel.Password = passwordBox.Password;
+        //    }
+        //}
     }
 }

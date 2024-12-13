@@ -18,8 +18,42 @@
             <Label Content="BookShelf" HorizontalAlignment="Center" FontSize="24" Margin="0,30,0,0" Foreground="White"/>
             <StackPanel Name="MenuButtons" Margin="0,30,0,0">
                 <Label Content="{Binding UserLogin}" HorizontalAlignment="Center" FontSize="20" Margin="0,0,0,0" Foreground="White"/>
-                <Button Content="Управление аккаунтом" Command="{Binding OpenAccountPageCommand}" Foreground="LightGray" />
-                <Button Content="Избранное" Foreground="LightGray" />
+                <Button Content="Управление аккаунтом" Command="{Binding OpenAccountPageCommand}" Foreground="LightGray">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsAuthenticated}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Content="Избранное"  Foreground="LightGray">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsAuthenticated}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Content="Войти/Зарегистрироваться" Command="{Binding OpenLoginWindowCommand}" Foreground="LightGray">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsAuthenticated}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button Content="Выйти" Foreground="LightGray" />
             </StackPanel>
         </StackPanel>

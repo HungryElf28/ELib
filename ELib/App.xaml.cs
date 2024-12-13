@@ -23,11 +23,6 @@ namespace ELib
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            CultureInfo culture = new CultureInfo("ru-RU");
-            Thread.CurrentThread.CurrentCulture = culture;
-            Thread.CurrentThread.CurrentUICulture = culture;
-            CultureInfo.DefaultThreadCurrentCulture = culture;
-            CultureInfo.DefaultThreadCurrentUICulture = culture;
             base.OnStartup(e);
             var kernel = new StandardKernel(new NinjectRegistrations(), new ReposModule());
             var navigationViewModel = new NavigationViewModel(kernel);

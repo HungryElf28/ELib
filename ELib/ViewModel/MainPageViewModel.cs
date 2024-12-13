@@ -9,6 +9,7 @@ using System.Windows.Input;
 using DTO;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace ELib.ViewModel
 {
@@ -19,6 +20,7 @@ namespace ELib.ViewModel
         private IUserSession _userSession;
         public ICommand OpenBookPageCommand { get; }
         public ICommand OpenAccountPageCommand { get; }
+        public ICommand OpenLoginWindowCommand { get; }
         private List<GenreDto> _genreList;
         private ObservableCollection<MainBooksListDto> _mainBooksList;
         private string _userLogin;
@@ -42,7 +44,10 @@ namespace ELib.ViewModel
                 NotifyPropertyChanged(nameof(MainBooksList));
             }
         }
-        public bool SwitchWindows { get; private set; }
+        public bool IsAuthenticated
+        {
+            get => _userSession.IsAuthenticated;
+        }
         public MainPageViewModel(NavigationViewModel navigationViewModel, IBookService bookService, IUserSession userSession)
         {
             _bookService = bookService;
@@ -50,6 +55,7 @@ namespace ELib.ViewModel
             _navigationViewModel = navigationViewModel;
             OpenBookPageCommand = new RelayCommand(OpenBookPage);
             OpenAccountPageCommand = new RelayCommand(OpenAccountPage);
+            OpenLoginWindowCommand = new RelayCommand(OpenLoginWindow);
             MainBooksList = new ObservableCollection<MainBooksListDto>();
             UserLogin = _userSession.CurrentUser.login;
             LoadBooks();
@@ -79,6 +85,11 @@ namespace ELib.ViewModel
             var book = parameter as BookPreviewDto;
             _bookService.SetCurrentBook(book.id);
             _navigationViewModel.OpenBookPageCommand.Execute(book);
+        }
+        private void OpenLoginWindow(object parameter)
+        {
+            //Window window = Window.GetWindow(Application.Current.MainWindow);
+            _navigationViewModel.OpenLoginWindowCommand.Execute(parameter);
         }
         private void OpenAccountPage(object parameter)
         {

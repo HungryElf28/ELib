@@ -41,25 +41,24 @@ namespace ELib.ViewModel
 
         private void OpenLoginWindow(object parameter)
         {
-            (parameter as Window)?.Close();
 
             var loginWindow = new LoginWindow();
             loginWindow.DataContext = new LoginViewModel(this, kernel.Get<IUserService>(), kernel.Get<IUserSession>());
             loginWindow.Show();
+            var currentWindow = Window.GetWindow(NavFrame);
+            currentWindow?.Close();
         }
 
         private void OpenRegisterWindow(object parameter)
         {
-            (parameter as Window)?.Close();
-
             var registerWindow = new RegisterWindow();
             registerWindow.DataContext = new RegisterViewModel(this, kernel.Get<IUserService>(), kernel.Get<IUserSession>());
             registerWindow.Show();
+            (parameter as Window)?.Close();
+
         }
         private void OpenMainWindow(object parameter)
         {
-            var window = parameter as Window;
-            window?.Close();
             var mainWindow = new MainWindow();
             var mainModel = new MainViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>());
             NavFrame = mainWindow.MainFrame;
@@ -68,6 +67,7 @@ namespace ELib.ViewModel
             mainPage.DataContext = new MainPageViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>());
             NavFrame.Navigate(mainPage);
             mainWindow.Show();
+            (parameter as Window)?.Close();
         }
         private void OpenMainPage(object parameter)
         {

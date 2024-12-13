@@ -32,7 +32,8 @@ namespace DTO
         public string coverLink { get; set; }
         public double? rating { get; set; }
         public List<AuthorDto> authors { get; set; } = new List<AuthorDto>();
-        public virtual genres genres { get; set; }
+        public int genreid { get; set; }
+        public string genreName { get; set; }
         public BookDto() { }
         public BookDto(books bk)
         {
@@ -43,8 +44,9 @@ namespace DTO
             fileLink = bk.fileLink;
             coverLink = bk.coverLink;
             rating = bk.rating;
+            genreid = bk.genreid;
             authors = bk.authors.Select(a => new AuthorDto(a)).ToList();
-            genres = bk.genres;
+            genreName = bk.genres.genre_name;
         }
     }
 }

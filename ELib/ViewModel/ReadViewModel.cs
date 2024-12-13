@@ -20,10 +20,10 @@ namespace BookReader.ViewModel
     {
         private List<string> _pages;
         private int _currentPage;
-        private int _linesPerPage = 15;
-        private double _fontSize = 12;
-        private const double MaxFontSize = 22;
-        private const double MinFontSize = 2;
+        private const int _linesPerPage = 15;
+        private int _fontSize = 12;
+        private const int MaxFontSize = 22;
+        private const int MinFontSize = 2;
         private IReadingService _readingService;
         private IBookService _bookService;
         private IUserSession _userSession;
@@ -37,7 +37,7 @@ namespace BookReader.ViewModel
         public ICommand IncreaseFontSizeCommand { get; }
         public ICommand DecreaseFontSizeCommand { get; }
         public ICommand GoBackCommand { get; }
-        public double FontSize
+        public int FontSize
         {
             get => _fontSize;
             set
@@ -59,16 +59,6 @@ namespace BookReader.ViewModel
                 OnPropertyChanged(nameof(CurrentBook));
             }
         }
-        private string _bookTitle;
-        public string BookTitle
-        {
-            get => _bookTitle;
-            private set
-            {
-                _bookTitle = value;
-                OnPropertyChanged(nameof(BookTitle));
-            }
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -84,7 +74,7 @@ namespace BookReader.ViewModel
             _userSession = userSession;
             _readingService = readingService;
             _navigationViewModel = navigationViewModel;
-            readingService.SetCurrentReading(userSession.CurrentUser.id, bookService.CurrentBook.id);
+            _readingService.SetCurrentReading(userSession.CurrentUser.id, bookService.CurrentBook.id);
             _currentBook = bookService.CurrentBook;
             _currentPage = readingService.CurrentReading.current_page;
             LoadBook();

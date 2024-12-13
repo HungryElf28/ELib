@@ -34,6 +34,7 @@ namespace ELib.ViewModel
         private ObservableCollection<TariffViewModel> _tariffPreviews;
         public ICommand ChangeCommand { get; }
         public ICommand SetTariffCommand { get; }
+        public ICommand GoBackCommand { get; }
         public UserDto CurrentUser
         {
             get { return _currentUser; }
@@ -66,6 +67,7 @@ namespace ELib.ViewModel
             CurrentUser = userSession.CurrentUser;
             ChangeCommand = new RelayCommand(ValidateChanges);
             SetTariffCommand = new RelayCommand(SetTariff);
+            GoBackCommand = new RelayCommand(GoBack);
             TariffPreviews = new ObservableCollection<TariffViewModel>();
             LoadTariffs();
         }
@@ -108,6 +110,10 @@ namespace ELib.ViewModel
             var tariff = parameter as TariffViewModel;
             _tariffService.SetTariff(CurrentUser.id, tariff.Id);
             LoadTariffs();
+        }
+        private void GoBack(object parameter)
+        {
+            _navigationViewModel.GoBackCommand.Execute(parameter);
         }
         public event PropertyChangedEventHandler PropertyChanged;
         private void NotifyPropertyChanged(string propertyName)

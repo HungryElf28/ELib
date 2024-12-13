@@ -21,6 +21,7 @@
                         Command="{Binding OpenLoginWindowCommand}"
                         CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                         Background="#00A98D8D"
+                        Foreground="Black"
                         BorderBrush="#00A98D8D"/>
                 </StackPanel>
                 <StackPanel>
@@ -57,9 +58,9 @@
 
                             <materialDesign:Snackbar MessageQueue="{Binding SnackbarMessageQueue}" />
                             <Button 
-                                Content="Создать аккаунт" 
-                                Width="180" 
-                                FontSize="12" 
+                                Content="Создать аккаунт"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
                                 Margin="0,10,0,0"
                                 Command="{Binding RegisterCommand}"
                                 CommandParameter="{Binding ElementName=PasswordBox}"/>

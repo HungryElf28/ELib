@@ -22,6 +22,7 @@ namespace BLL.Services
 
         public void ClearSession()
         {
+            CurrentUser = new UserDto();
             CurrentUser.id = 0;
             CurrentUser.login = "Guest";
             CurrentUser.password = string.Empty;
@@ -37,7 +38,7 @@ namespace BLL.Services
         {
             CurrentUser = new UserDto(user);
             IsAuthenticated = true;
-            //db.userTariff.RemoveExpiredTariffs(CurrentUser.id);
+            db.userTariff.RemoveExpiredTariffs(CurrentUser.id);
         }
         public void UpdateUser(UserDto user)
         {
