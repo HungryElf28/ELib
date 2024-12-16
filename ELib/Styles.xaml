@@ -17,7 +17,7 @@
     <Style  TargetType="Button" BasedOn="{StaticResource MaterialDesignFlatButton}">
         <Setter Property="Background" Value="#0dab50" />
         <Setter Property="Foreground" Value="LightGray" />
-        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontSize" Value="10" />
         <Setter Property="BorderBrush" Value="#215537" />
         <Setter Property="BorderThickness" Value="1" />
     </Style>

@@ -13,11 +13,9 @@ namespace DTO
         public int id { get; set; }
 
         [Required]
-        [StringLength(20)]
+        [StringLength(30)]
         public string name { get; set; }
 
-        [StringLength(20)]
-        public string surname { get; set; }
 
         public string bio { get; set; }
         public AuthorDto() { }
@@ -25,7 +23,6 @@ namespace DTO
         {
             id = aut.id;
             name = aut.name;
-            surname = aut.surname;
             bio = aut.bio;
         }
     }

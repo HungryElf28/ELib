@@ -21,6 +21,7 @@ namespace ELib.Util
             Bind<IBookService>().To<BookService>().InSingletonScope();
             Bind<IReadingService>().To<ReadingService>().InSingletonScope();
             Bind<ITariffService>().To<TariffService>().InSingletonScope();
+            Bind<IReviewService>().To<ReviewService>().InSingletonScope();
 
         }
     }

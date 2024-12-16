@@ -19,6 +19,9 @@ namespace ELib.ViewModel
         private NavigationViewModel _navigationViewModel;
         public ICommand GoBackCommand { get; }
         public ICommand ReadBookCommand { get; }
+        public ICommand ChooseCommand { get; }
+        public ICommand OfflineCommand { get; }
+        public ICommand OpenReviewWindowCommand { get; }
         private string _readButtonText;
         public string ReadButtonText
         {
@@ -27,6 +30,26 @@ namespace ELib.ViewModel
             {
                 _readButtonText = value;
                 NotifyPropertyChanged(nameof(ReadButtonText));
+            }
+        }
+        private string _chosenButtonText;
+        public string ChosenButtonText
+        {
+            get => _chosenButtonText;
+            set
+            {
+                _chosenButtonText = value;
+                NotifyPropertyChanged(nameof(ChosenButtonText));
+            }
+        }
+        private string _offlineButtonText;
+        public string OfflineButtonText
+        {
+            get => _offlineButtonText;
+            set
+            {
+                _offlineButtonText = value;
+                NotifyPropertyChanged(nameof(OfflineButtonText));
             }
         }
         private bool _isBookAccessible;
@@ -40,6 +63,28 @@ namespace ELib.ViewModel
                 ReadButtonText = IsBookAccessible ? "Читать" : "Чтение недоступно по тарифу";
             }
         }
+        private bool _isBookChosen;
+        public bool IsBookChosen
+        {
+            get => _isBookChosen;
+            set
+            {
+                _isBookChosen = value;
+                NotifyPropertyChanged(nameof(IsBookChosen));
+                ChosenButtonText = IsBookChosen ? "Удалить из избранного" : "В избранное";
+            }
+        }
+        private bool _isBookOffline;
+        public bool IsBookOffline
+        {
+            get => _isBookOffline;
+            set
+            {
+                _isBookOffline = value;
+                NotifyPropertyChanged(nameof(IsBookOffline));
+                OfflineButtonText = IsBookOffline ? "Удалить c устройства" : "Загрузить на устройство";
+            }
+        }
         private BookDto _currentBook;
         public BookDto CurrentBook
         {
@@ -48,6 +93,7 @@ namespace ELib.ViewModel
             {
                 _currentBook = value;
                 NotifyPropertyChanged(nameof(CurrentBook));
+                NotifyPropertyChanged(nameof(RatingText));
             }
         }
         private List<ReviewDto> _reviewList;
@@ -69,26 +115,51 @@ namespace ELib.ViewModel
         {
             GoBackCommand = new RelayCommand(GoBack);
             ReadBookCommand = new RelayCommand(ReadBook);
+            OpenReviewWindowCommand = new RelayCommand(OpenReview);
+            ChooseCommand = new RelayCommand(Choose);
+            OfflineCommand = new RelayCommand(Download);
             _bookService = bookService;
             _userSession = userSession;
             _tariffService = tariffService;
             _navigationViewModel = navigationViewModel;
+            _navigationViewModel.ReviewWindowClosed += LoadReviews;
             CurrentBook = bookService.CurrentBook;
             IsBookAccessible = _tariffService.CheckTariff(CurrentBook.id, _userSession.CurrentUser.id);
+            IsBookChosen = _bookService.GetChosenStatus(_userSession.CurrentUser.id, CurrentBook.id);
+            IsBookOffline = _bookService.GetOfflineStatus(_userSession.CurrentUser.id, CurrentBook.id);
             LoadReviews();
         }
         private void LoadReviews()
         {
+            _bookService.UpdateCurrentBookRating();
+            CurrentBook = _bookService.CurrentBook;
+            NotifyPropertyChanged(nameof(RatingText));
             ReviewList = _bookService.GetReviews(CurrentBook.id);
         }
         private void GoBack(object parameter)
         {
+            _bookService.RemoveCurrentBook();
             _navigationViewModel.GoBackCommand.Execute(parameter);
         }
         private void ReadBook(object parameter)
         {
 
             _navigationViewModel.OpenReadPageCommand.Execute(parameter);
+        }
+        private void Choose(object parameter)
+        {
+            _bookService.ChangeChosenStatus(_userSession.CurrentUser.id, CurrentBook.id);
+            IsBookChosen = _bookService.GetChosenStatus(_userSession.CurrentUser.id, CurrentBook.id);
+        }
+        private void Download(object parameter)
+        {
+            _bookService.ChangeOfflineStatus(_userSession.CurrentUser.id, CurrentBook.id);
+            IsBookOffline = _bookService.GetOfflineStatus(_userSession.CurrentUser.id, CurrentBook.id);
+        }
+        private void OpenReview(object parameter)
+        {
+
+            _navigationViewModel.OpenReviewWindowCommand.Execute(parameter);
         }
         private void NotifyPropertyChanged(string propertyName)
         {

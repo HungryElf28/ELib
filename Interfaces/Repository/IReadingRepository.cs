@@ -10,5 +10,6 @@ namespace Interfaces.Repository
     public interface IReadingRepository
     {
         reading_book GetReadingStatus(int usId, int bkId);
+        IQueryable<reading_book> GetAll();
     }
 }

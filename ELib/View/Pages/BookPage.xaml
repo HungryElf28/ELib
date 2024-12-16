@@ -18,24 +18,31 @@
             <Setter Property="Margin" Value="10,0,0,0" />
         </Style>
     </Page.Resources>
-    <DockPanel LastChildFill="True">
-        <StackPanel  DockPanel.Dock="Right" Background="#008110">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="2"  DockPanel.Dock="Right" Background="#008110">
             <Label Content ="BookShelf" HorizontalAlignment="Center" FontSize="24" Margin="0,30,0,0" Foreground="White"/>
             <StackPanel Name="MenuButtons" Margin="0,30,0,0">
                 <Button Content="{Binding ReadButtonText}" Foreground="LightGray" Command="{Binding ReadBookCommand}" IsEnabled="{Binding IsBookAccessible}">
                 </Button>
-                <Button Content="Оценить" Foreground="LightGray">
+                <Button Content="Ваш отзыв" Command ="{Binding OpenReviewWindowCommand}" Foreground="LightGray">
                 </Button>
-                <Button Content="Добавить в Избранное" Foreground="LightGray">
+                <Button Content="{Binding ChosenButtonText}" Foreground="LightGray" Command="{Binding ChooseCommand}">
+                </Button>
+                <Button Content="{Binding OfflineButtonText}" Foreground="LightGray" Command="{Binding OfflineCommand}">
                 </Button>
                 <Button Content="Назад" Foreground="LightGray" Command="{Binding GoBackCommand}">
                 </Button>
             </StackPanel>
         </StackPanel>
-        <StackPanel DockPanel.Dock="Left" Width="420">
+        <StackPanel Grid.Column="0">
             <Image Source="{Binding CurrentBook.coverLink}"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="UniformToFill" Margin="30"/>
         </StackPanel>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Column="1" VerticalScrollBarVisibility="Auto">
             <StackPanel>
                 <TextBlock Text="{Binding CurrentBook.bookTitle}" FontWeight="Bold"/>
                 <TextBlock Text="Авторы:" FontWeight="Bold"/>
@@ -44,7 +51,6 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding name}" Style="{StaticResource NameStyle}"/>
-                                <TextBlock Text="{Binding surname}" Style="{StaticResource NameStyle}"/>
                             </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -71,5 +77,5 @@
                 </ItemsControl>
             </StackPanel>
         </ScrollViewer>
-    </DockPanel>
+    </Grid>
 </Page>

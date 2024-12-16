@@ -10,24 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ELib.View
+namespace ELib.View.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для MakeReviewWindow.xaml
+    /// Логика взаимодействия для SearchPage.xaml
     /// </summary>
-    public partial class MakeReviewWindow : Window
+    public partial class SearchPage : Page
     {
-        public MakeReviewWindow()
+        public SearchPage()
         {
             InitializeComponent();
-        }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            scaleTransform.ScaleX = e.NewSize.Width / 800;
-            scaleTransform.ScaleY = e.NewSize.Height / 450;
         }
     }
 }

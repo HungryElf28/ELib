@@ -90,12 +90,15 @@
     <Compile Include="DTO\MainBooksList.cs" />
     <Compile Include="DTO\Reading.cs" />
     <Compile Include="DTO\Review.cs" />
+    <Compile Include="DTO\SearchResult.cs" />
     <Compile Include="DTO\TariffPreview.cs" />
     <Compile Include="DTO\User.cs" />
     <Compile Include="DTO\UserTariff.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IChosenRepository.cs" />
     <Compile Include="Repository\IDbRepos.cs" />
-    <Compile Include="Repository\IMainBooksShowRepository.cs" />
+    <Compile Include="Repository\IBooksShowRepository.cs" />
+    <Compile Include="Repository\IOfflineRepository.cs" />
     <Compile Include="Repository\IReadingRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />
     <Compile Include="Repository\IUserTariffRepository.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="Services\INavigationService.cs" />
     <Compile Include="Repository\IReviewsRepository.cs" />
     <Compile Include="Services\IReadingService.cs" />
+    <Compile Include="Services\IReviewService.cs" />
     <Compile Include="Services\ITariffService.cs" />
     <Compile Include="Services\IUserService.cs" />
     <Compile Include="Services\IUserSession.cs" />

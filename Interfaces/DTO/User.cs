@@ -34,6 +34,7 @@ namespace DTO
         public string e_mail { get; set; }
 
         public int bonuses { get; set; }
+        public ICollection<books> chosen_books { get; set; }
         public UserDto() { }
         public UserDto(users us)
         {
@@ -45,6 +46,7 @@ namespace DTO
             e_mail = us.e_mail;
             bonuses = us.bonuses;
             reg_date = us.reg_date;
+            chosen_books = us.books;
         }
     }
 }

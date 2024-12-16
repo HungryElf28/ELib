@@ -22,9 +22,16 @@ namespace ELib.ViewModel
         public ICommand OpenMainWindowCommand { get; }
         public ICommand OpenMainPageCommand { get; }
         public ICommand OpenBookPageCommand { get; }
+        public ICommand OpenAuthorPageCommand { get; }
+        public ICommand OpenGenrePageCommand { get; }
         public ICommand OpenReadPageCommand { get; }
         public ICommand OpenAccountPageCommand { get; }
+        public ICommand OpenChosenPageCommand { get; }
+        public ICommand OpenOfflinePageCommand { get; }
+        public ICommand OpenReviewWindowCommand { get; }
+        public ICommand CloseReviewWindowCommand { get; }
         public ICommand GoBackCommand { get; }
+        public event Action ReviewWindowClosed;
         private Frame NavFrame;
         public NavigationViewModel(IKernel kernel)
         {
@@ -33,8 +40,14 @@ namespace ELib.ViewModel
             OpenMainWindowCommand = new RelayCommand(OpenMainWindow);
             OpenMainPageCommand = new RelayCommand(OpenMainPage);
             OpenBookPageCommand = new RelayCommand(OpenBookPage);
+            OpenAuthorPageCommand = new RelayCommand(OpenAuthorPage);
+            OpenGenrePageCommand = new RelayCommand(OpenGenrePage);
             OpenReadPageCommand = new RelayCommand(OpenReadPage);
             OpenAccountPageCommand = new RelayCommand(OpenAccountPage);
+            OpenChosenPageCommand = new RelayCommand(OpenChosenPage);
+            OpenOfflinePageCommand = new RelayCommand(OpenOfflinePage);
+            OpenReviewWindowCommand = new RelayCommand(OpenReviewWindow);
+            CloseReviewWindowCommand = new RelayCommand(CloseReviewWindow);
             GoBackCommand = new RelayCommand(GoBack);
             this.kernel = kernel;
         }
@@ -92,6 +105,43 @@ namespace ELib.ViewModel
             var accountPage = new AccountPage();
             accountPage.DataContext = new AccountPageViewModel(this, kernel.Get<IUserSession>(), kernel.Get<ITariffService>());
             NavFrame.Navigate(accountPage);
+        }
+        private void OpenChosenPage(object parameter)
+        {
+            var chosenPage = new ChosenPage();
+            chosenPage.DataContext = new ChosenPageViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>());
+            NavFrame.Navigate(chosenPage);
+        }
+        private void OpenAuthorPage(object parameter)
+        {
+            var authorPage = new AuthorPage();
+            authorPage.DataContext = new AuthorPageViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>());
+            NavFrame.Navigate(authorPage);
+        }
+        private void OpenGenrePage(object parameter)
+        {
+            var genrePage = new GenrePage();
+            genrePage.DataContext = new GenrePageViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>());
+            NavFrame.Navigate(genrePage);
+        }
+        private void OpenOfflinePage(object parameter)
+        {
+            var offlinePage = new OfflinePage();
+            offlinePage.DataContext = new OfflinePageViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>());
+            NavFrame.Navigate(offlinePage);
+        }
+        private void OpenReviewWindow(object parameter)
+        {
+
+            var reviewWindow = new MakeReviewWindow();
+            reviewWindow.DataContext = new MakeReviewViewModel(this, kernel.Get<IUserSession>(), kernel.Get<IBookService>(), kernel.Get<IReviewService>());
+            reviewWindow.Owner = Window.GetWindow(NavFrame);
+            reviewWindow.Closed += (s, e) => ReviewWindowClosed?.Invoke();
+            reviewWindow.ShowDialog();
+        }
+        private void CloseReviewWindow(object parameter)
+        {
+            (parameter as Window)?.Close();
         }
         private void GoBack(object parameter)
         {

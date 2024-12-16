@@ -49,7 +49,6 @@ namespace ELib.ViewModel
         private IUserService _userService;
         private IUserSession _userSession;
         public event PropertyChangedEventHandler PropertyChanged;
-        public bool SwitchWindows { get; private set; }
 
         public LoginViewModel(NavigationViewModel navigationViewModel, IUserService userService, IUserSession userSession)
         {
@@ -63,15 +62,11 @@ namespace ELib.ViewModel
 
         private void OpenRegisterWindow(object parameter)
         {
-            SwitchWindows = true;
             _navigationViewModel.OpenRegisterWindowCommand.Execute(parameter);
-            SwitchWindows = false;
         }
         private void OpenMainWindow(object parameter)
         {
-            SwitchWindows = true;
             _navigationViewModel.OpenMainWindowCommand.Execute(parameter);
-            SwitchWindows = false;
         }
         private void AuthenticateUser(object parameter)
         {

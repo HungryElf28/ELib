@@ -44,7 +44,7 @@ namespace BLL.Services
             usr.reg_date = us.reg_date;
             usr.e_mail = us.e_mail;
             usr.bonuses = us.bonuses;
-            db.Save();
+            Save();
 
         }
         public void DeleteUser(int id)
@@ -53,7 +53,7 @@ namespace BLL.Services
             if(usr != null)
             {
                 db.users.Delete(usr.id);
-                db.Save();
+                Save();
             }
         }
         public bool ValidateUser(string login, string password)

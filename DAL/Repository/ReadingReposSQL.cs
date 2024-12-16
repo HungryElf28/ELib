@@ -31,6 +31,10 @@ namespace DAL.Repository
             }
             return db.reading_book.Find(usId, bkId);
         }
+        public IQueryable<reading_book> GetAll()
+        {
+            return db.reading_book;
+        }
 
     }
 }

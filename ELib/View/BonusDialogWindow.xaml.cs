@@ -15,19 +15,13 @@ using System.Windows.Shapes;
 namespace ELib.View
 {
     /// <summary>
-    /// Логика взаимодействия для MakeReviewWindow.xaml
+    /// Логика взаимодействия для BonusDialogWindow.xaml
     /// </summary>
-    public partial class MakeReviewWindow : Window
+    public partial class BonusDialogWindow : Window
     {
-        public MakeReviewWindow()
+        public BonusDialogWindow()
         {
             InitializeComponent();
-        }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            scaleTransform.ScaleX = e.NewSize.Width / 800;
-            scaleTransform.ScaleY = e.NewSize.Height / 450;
         }
     }
 }

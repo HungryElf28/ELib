@@ -34,6 +34,7 @@ namespace DTO
         public List<AuthorDto> authors { get; set; } = new List<AuthorDto>();
         public int genreid { get; set; }
         public string genreName { get; set; }
+        public ICollection<users> users_chose { get; set; }
         public BookDto() { }
         public BookDto(books bk)
         {
@@ -47,6 +48,7 @@ namespace DTO
             genreid = bk.genreid;
             authors = bk.authors.Select(a => new AuthorDto(a)).ToList();
             genreName = bk.genres.genre_name;
+            users_chose = bk.users;
         }
     }
 }

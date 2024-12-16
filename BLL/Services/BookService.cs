@@ -14,6 +14,8 @@ namespace BLL.Services
     {
         private IDbRepos db;
         public BookDto CurrentBook { get; set; }
+        public AuthorDto CurrentAuthor { get; set; }
+        public GenreDto CurrentGenre { get; set; }
         public BookService(IDbRepos db)
         {
             this.db = db;
@@ -31,6 +33,26 @@ namespace BLL.Services
         {
             CurrentBook =  new BookDto(db.books.GetItem(id));
         }
+        public void SetCurrentAuthor(int id)
+        {
+            CurrentAuthor = new AuthorDto(db.authors.GetItem(id));
+        }
+        public void SetCurrentGenre(int id)
+        {
+            CurrentGenre = new GenreDto(db.genres.GetItem(id));
+        }
+        public void RemoveCurrentBook()
+        {
+            CurrentBook = null;
+        }
+        public void RemoveCurrentAuthor()
+        {
+            CurrentAuthor = null;
+        }
+        public void RemoveCurrentGenre()
+        {
+            CurrentGenre = null;
+        }
         public void CreateBook(BookDto bk)
         {
             db.books.Create(new books()
@@ -47,6 +69,23 @@ namespace BLL.Services
             bok.coverLink = bk.coverLink;
             db.Save();
         }
+        public void UpdateCurrentBookRating()
+        {
+            books bok = db.books.GetItem(CurrentBook.id);
+            var reviews = db.bookReviews.GetBookReviews(bok.id);
+            if (reviews != null && reviews.Any())
+            {
+                var averageRating = reviews.Average(r => r.mark);
+                bok.rating = averageRating;
+                db.Save();
+            }
+            else
+            {
+                bok.rating = null;
+                db.Save();
+            }
+            CurrentBook.rating = bok.rating;
+        }
         public void DeleteBook(int id)
         {
             books bok = db.books.GetItem(id);
@@ -56,9 +95,59 @@ namespace BLL.Services
                 db.Save();
             }
         }
-        public List<BookPreviewDto> GetTopList(int GenreId, int count)
+        public bool GetChosenStatus(int usId, int bkId)
+        {
+            return db.chosen.Check(usId, bkId);
+        }
+        public void ChangeChosenStatus(int usId, int bkId)
+        {
+            if(db.chosen.Check(usId, bkId))
+            {
+                db.chosen.Delete(usId, bkId);
+                db.Save();
+            }
+            else
+            {
+                db.chosen.Add(usId, bkId);
+                db.Save();
+            }
+        }
+        public bool GetOfflineStatus(int usId, int bkId)
+        {
+            return db.offline.IsOffline(usId, bkId);
+        }
+        public void ChangeOfflineStatus(int usId, int bkId)
+        {
+            if (db.offline.IsOffline(usId, bkId))
+            {
+                db.offline.DeleteBook(usId, bkId);
+                db.Save();
+            }
+            else
+            {
+                db.offline.DownloadBook(usId, bkId);
+                db.Save();
+            }
+        }
+        public List<SearchResultDto> GetSearchList(string query)
+        {
+            return db.showBooks.GetSearchResults(query);
+        }
+        public List<BookPreviewDto> GetGenreBooks(int GenreId)
+        {
+            return db.showBooks.GetAllBooksByGenreName(GenreId);
+        }
+        public List<BookPreviewDto> GetGenreTopList(int GenreId, int count)
         {
             return db.showBooks.GetTopBooksByGenreName(GenreId, count);
+        }
+        public List<BookPreviewDto> GetAuthorBooks(int AuthorId)
+        {
+            return db.showBooks.GetAllBooksByAuthorName(AuthorId);
+        }
+        public List<BookPreviewDto> GetAuthorTopList(int AuthorId, int count)
+        {
+            return db.showBooks.GetTopBooksByAuthorName(AuthorId, count);
         }
         public List<GenreDto> GetGenres()
         {
@@ -70,8 +159,19 @@ namespace BLL.Services
         }
         public List<ReviewDto> GetReviews(int bkId)
         {
-            return db.bookReviews.GetBookReviews(bkId);
+            return db.bookReviews.GetBookReviews(bkId).Where(rv => rv.mark != null).ToList();
         }
-
+        public List<BookPreviewDto> GetRecList(int usId)
+        {
+            return db.showBooks.GetRecomendationList(usId);
+        }
+        public List<BookPreviewDto> GetChosenList(int usId)
+        {
+            return db.chosen.GetChosenBooks(usId);
+        }
+        public List<BookPreviewDto> GetOfflineList(int usId)
+        {
+            return db.offline.GetOfflineBooks(usId);
+        }
     }
 }

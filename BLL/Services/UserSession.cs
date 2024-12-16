@@ -39,6 +39,7 @@ namespace BLL.Services
             CurrentUser = new UserDto(user);
             IsAuthenticated = true;
             db.userTariff.RemoveExpiredTariffs(CurrentUser.id);
+            db.offline.DeleteExpiredBooks(CurrentUser.id);
         }
         public void UpdateUser(UserDto user)
         {

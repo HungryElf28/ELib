@@ -17,7 +17,7 @@ namespace DomainModel
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int book_id { get; set; }
-        public int mark { get; set; }
+        public int? mark { get; set; }
 
         [StringLength(8000)]
         public string reviewText { get; set; }

@@ -17,11 +17,13 @@ namespace DAL.Repository
         private BookReposSQL booksRepos;
         private GenreReposSQL genreRepos;
         private AuthorReposSQL authorRepos;
-        private MainWindowShowReposSQL mainShowRepos;
+        private BooksShowReposSQL mainShowRepos;
         private ReviewReposSQL reviewRepos;
         private ReadingReposSQL readingRepos;
         private TariffReposSQL tariffRepos;
         private UserTariffReposSQL userTariffRepos;
+        private ChosenReposSQL chosenRepos;
+        private OfflineReposSQL offlineRepos;
         public DbReposSQL()
         {
             db = new Elib();
@@ -71,12 +73,12 @@ namespace DAL.Repository
                 return tariffRepos;
             }
         }
-        public IMainBooksShowRepository showBooks
+        public IBooksShowRepository showBooks
         {
             get
             {
                 if (mainShowRepos == null)
-                    mainShowRepos = new MainWindowShowReposSQL(db);
+                    mainShowRepos = new BooksShowReposSQL(db);
                 return mainShowRepos;
             }
         }
@@ -105,6 +107,24 @@ namespace DAL.Repository
                 if (userTariffRepos == null)
                     userTariffRepos = new UserTariffReposSQL(db);
                 return userTariffRepos;
+            }
+        }
+        public IChosenRepository chosen
+        {
+            get
+            {
+                if (chosenRepos == null)
+                    chosenRepos = new ChosenReposSQL(db);
+                return chosenRepos;
+            }
+        }
+        public IOfflineRepository offline
+        {
+            get
+            {
+                if (offlineRepos == null)
+                    offlineRepos = new OfflineReposSQL(db);
+                return offlineRepos;
             }
         }
         public int Save()

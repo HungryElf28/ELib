@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace ELib
+namespace ELib.Converters
 {
     public class LoginConverter : IMultiValueConverter
     {

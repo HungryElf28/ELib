@@ -3,6 +3,7 @@ using DTO;
 using Interfaces.Services;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,6 +22,10 @@ namespace DAL.Repository
         {
             db.review.Add(rev);
         }
+        public void UpdateReview(review review)
+        {
+            db.Entry(review).State = EntityState.Modified;
+        }
         public review GetReview(int usId, int bkId)
         {
             return db.review.Find(usId, bkId);
@@ -37,6 +42,12 @@ namespace DAL.Repository
                     userLogin = r.users.login,
                     book_id = r.book_id
                 }).ToList();
+        }
+        public void Delete(int usId, int bkId)
+        {
+            review rv = db.review.Find(usId, bkId);
+            if (rv != null)
+                db.review.Remove(rv);
         }
     }
 }
