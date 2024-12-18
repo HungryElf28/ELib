@@ -30,12 +30,52 @@
             <Label Content ="BookShelf" HorizontalAlignment="Center" FontSize="24" Margin="0,30,0,0" Foreground="White"/>
             <StackPanel Name="MenuButtons" Margin="0,30,0,0">
                 <Button Content="{Binding ReadButtonText}" Foreground="LightGray" Command="{Binding ReadBookCommand}" IsEnabled="{Binding IsBookAccessible}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsAuthenticated}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
                 <Button Content="Ваш отзыв" Command ="{Binding OpenReviewWindowCommand}" Foreground="LightGray">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsAuthenticated}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
                 <Button Content="{Binding ChosenButtonText}" Foreground="LightGray" Command="{Binding ChooseCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsAuthenticated}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
                 <Button Content="{Binding OfflineButtonText}" Foreground="LightGray" Command="{Binding OfflineCommand}">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsAuthenticated}" Value="True">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
                 <Button Content="Назад" Foreground="LightGray" Command="{Binding GoBackCommand}">
                 </Button>
@@ -86,7 +126,7 @@
                                 <StackPanel>
                                     <TextBlock Text="{Binding userLogin}" FontWeight="Bold" />
                                     <TextBlock Text="{Binding mark, StringFormat='Оценка: {0}'}" />
-                                    <TextBlock Text="{Binding reviewText}" Margin="0,5,0,0" />
+                                    <TextBlock Text="{Binding reviewText}" Margin="0,5,0,0" TextWrapping="Wrap" />
                                 </StackPanel>
                             </Border>
                         </DataTemplate>

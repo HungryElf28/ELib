@@ -132,7 +132,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converters\ParameterConverter.cs" />
+    <Compile Include="Converters\LoginConverter.cs" />
+    <Compile Include="Converters\RegisterConverter.cs" />
     <Compile Include="Converters\StarConverter.cs" />
     <Compile Include="Converters\StringToIntConverter.cs" />
     <Compile Include="Util\NinjectRegistrations.cs" />

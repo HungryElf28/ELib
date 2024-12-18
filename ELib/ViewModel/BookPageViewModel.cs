@@ -121,31 +121,10 @@ namespace ELib.ViewModel
         {
             get => CurrentBook.rating.HasValue ? $"Рейтинг: {CurrentBook.rating:F1}/5" : "Рейтинг: отсутствует";
         }
-        //public ObservableCollection<StarState> RatingStars
-        //{
-        //    get
-        //    {
-        //        if (CurrentBook.rating.HasValue)
-        //        {
-
-        //            double rating = CurrentBook.rating.Value;
-        //            var stars = new List<StarState>();
-
-        //            for (int i = 1; i <= 5; i++)
-        //            {
-        //                if (i <= rating)
-        //                    stars.Add(StarState.Full);
-        //                else if (i - 1 < rating && rating < i)
-        //                    stars.Add(StarState.Half);
-        //                else
-        //                    stars.Add(StarState.Empty);
-        //            }
-
-        //            return new ObservableCollection<StarState>(stars);
-        //        }
-        //        return new ObservableCollection<StarState>(Enumerable.Repeat(StarState.Empty, 5));
-        //    }
-        //}
+        public bool IsAuthenticated
+        {
+            get => _userSession.IsAuthenticated;
+        }
         public event PropertyChangedEventHandler PropertyChanged;
         public BookPageViewModel(NavigationViewModel navigationViewModel, IBookService bookService, IUserSession userSession, ITariffService tariffService, IKernel kernel)
         {
@@ -159,9 +138,12 @@ namespace ELib.ViewModel
             _tariffService = tariffService;
             _navigationViewModel = navigationViewModel;
             CurrentBook = bookService.CurrentBook;
-            IsBookAccessible = _tariffService.CheckTariff(CurrentBook.id, _userSession.CurrentUser.id);
-            IsBookChosen = _bookService.GetChosenStatus(_userSession.CurrentUser.id, CurrentBook.id);
-            IsBookOffline = _bookService.GetOfflineStatus(_userSession.CurrentUser.id, CurrentBook.id);
+            if (IsAuthenticated)
+            {
+                IsBookAccessible = _tariffService.CheckTariff(CurrentBook.id, _userSession.CurrentUser.id);
+                IsBookChosen = _bookService.GetChosenStatus(_userSession.CurrentUser.id, CurrentBook.id);
+                IsBookOffline = _bookService.GetOfflineStatus(_userSession.CurrentUser.id, CurrentBook.id);
+            }
             LoadReviews();
             this.kernel = kernel;
         }

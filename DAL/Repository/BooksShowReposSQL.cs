@@ -97,10 +97,11 @@ namespace DAL.Repository
         }
         public List<SearchResultDto> GetSearchResults(string query)
         {
+            query = query.ToLower();
             var results = db.books
-                .Where(b => b.bookTitle.Contains(query)
-                         || b.genres.genre_name.Contains(query)
-                         || b.authors.Any(a => a.name.Contains(query)))
+                .Where(b => b.bookTitle.ToLower().Contains(query)
+                         || b.genres.genre_name.ToLower().Contains(query)
+                         || b.authors.Any(a => a.name.ToLower().Contains(query)))
                 .Select(b => new SearchResultDto
                 {
                     id = b.id,
@@ -109,7 +110,7 @@ namespace DAL.Repository
                 })
                 .Union(
                     db.authors
-                        .Where(a => a.name.Contains(query))
+                        .Where(a => a.name.ToLower().Contains(query))
                         .Select(a => new SearchResultDto
                         {
                             id=a.id,
@@ -119,7 +120,7 @@ namespace DAL.Repository
                         )
                 .Union(
                     db.genres
-                        .Where(g => g.genre_name.Contains(query))
+                        .Where(g => g.genre_name.ToLower().Contains(query))
                         .Select(g => new SearchResultDto
                         {
                             id = g.id,

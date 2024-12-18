@@ -25,6 +25,7 @@ namespace ELib.ViewModel
         public ICommand OpenChosenPageCommand { get; }
         public ICommand OpenOfflinePageCommand { get; }
         public ICommand OpenLoginWindowCommand { get; }
+        public ICommand ExitAppCommand { get; }
         private List<GenreDto> _genreList;
         private ObservableCollection<MainBooksListDto> _mainBooksList;
         private ObservableCollection<BookPreviewDto> _recList;
@@ -112,9 +113,26 @@ namespace ELib.ViewModel
                 UpdateSearchList(_srchText);
             }
         }
+        private string _loginButtonText;
+        public string LoginButtonText
+        {
+            get => _loginButtonText;
+            set
+            {
+                _loginButtonText = value;
+                NotifyPropertyChanged(nameof(LoginButtonText));
+            }
+        }
+        private bool _isAuthenticated;
         public bool IsAuthenticated
         {
-            get => _userSession.IsAuthenticated;
+            get => _isAuthenticated;
+            set
+            {
+                _isAuthenticated = value;
+                NotifyPropertyChanged(nameof(IsAuthenticated));
+                LoginButtonText = IsAuthenticated ? "Выйти из аккаунта" : "Войти/Зарегистрироваться";
+            }
         }
         public bool HasRecommends
         {
@@ -136,8 +154,10 @@ namespace ELib.ViewModel
             OpenLoginWindowCommand = new RelayCommand(OpenLoginWindow);
             SearchCommand = new RelayCommand(OpenSearchResult);
             GetResultsCommand = new RelayCommand(GetResults);
+            ExitAppCommand = new RelayCommand(ExitApp);
             MainBooksList = new ObservableCollection<MainBooksListDto>();
             SearchList = new ObservableCollection<SearchResultDto>();
+            IsAuthenticated = _userSession.IsAuthenticated;
             UserLogin = _userSession.CurrentUser.login;
             LoadBooks();
         }
@@ -224,6 +244,10 @@ namespace ELib.ViewModel
         private void OpenOfflinePage(object parameter)
         {
             _navigationViewModel.OpenOfflinePageCommand.Execute(parameter);
+        }
+        private void ExitApp(object parameter)
+        {
+            _navigationViewModel.ExitAppCommand.Execute(parameter);
         }
     }
 }

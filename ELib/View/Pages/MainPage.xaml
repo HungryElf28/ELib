@@ -29,6 +29,8 @@
                         </Style>
                     </Button.Style>
                 </Button>
+                <Button Content="{Binding LoginButtonText}" Command="{Binding OpenLoginWindowCommand}" Foreground="LightGray">
+                </Button>
                 <Button Content="Избранное" Command="{Binding OpenChosenPageCommand}"  Foreground="LightGray">
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
@@ -53,19 +55,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Content="Войти/Зарегистрироваться" Command="{Binding OpenLoginWindowCommand}" Foreground="LightGray">
-                    <Button.Style>
-                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                            <Setter Property="Visibility" Value="Visible" />
-                            <Style.Triggers>
-                                <DataTrigger Binding="{Binding IsAuthenticated}" Value="True">
-                                    <Setter Property="Visibility" Value="Collapsed" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </Button.Style>
-                </Button>
-                <Button Content="Выйти" Foreground="LightGray" />
+                <Button Content="Выйти" Foreground="LightGray" Command="{Binding ExitAppCommand}" />
             </StackPanel>
         </StackPanel>
         <Grid Grid.Column="0">
@@ -73,16 +63,20 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="9*"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Background="#8EEC6A" Orientation="Horizontal">
-                <materialDesign:PackIcon Kind="Magnify" Width="50" Height="50" Foreground="Gray" VerticalAlignment="Center"/>
-                <ComboBox IsEditable="True" 
-                          Text="{Binding SrchText}" 
+            <Grid Grid.Row="0" Background="#8EEC6A">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="6*"/>
+                </Grid.ColumnDefinitions>
+                <materialDesign:PackIcon Grid.Column="0" Kind="Magnify" Width="50" Height="50" Foreground="Gray" VerticalAlignment="Center"/>
+                <ComboBox IsEditable="True" Grid.Column="1"
+                          Text="{Binding SrchText, UpdateSourceTrigger=PropertyChanged}" 
                           ItemsSource="{Binding SearchList}" 
                           SelectedItem="{Binding SelectedResult}" 
                           Margin="10" 
                           VerticalAlignment="Stretch"
                           FontSize="16"
-                          StaysOpenOnEdit="True" Width="650"
+                          StaysOpenOnEdit="True" 
                           HorizontalContentAlignment="Left"
                           VerticalContentAlignment="Center">
                     <ComboBox.ItemTemplate>
@@ -94,10 +88,22 @@
                     </ComboBox.ItemTemplate>
                     <ComboBox.Style>
                         <Style TargetType="ComboBox">
+                            <Setter Property="IsDropDownOpen" Value="False" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}}" Value="">
+                                    <Setter Property="IsDropDownOpen" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}}" Value="{x:Null}">
+                                    <Setter Property="IsDropDownOpen" Value="False" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource Self}}">
+                                    <Setter Property="IsDropDownOpen" Value="True" />
+                                </DataTrigger>
+                            </Style.Triggers>
                         </Style>
                     </ComboBox.Style>
                 </ComboBox>
-            </StackPanel>
+            </Grid>
             <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" Margin="10">
                 <StackPanel>
                     <StackPanel>

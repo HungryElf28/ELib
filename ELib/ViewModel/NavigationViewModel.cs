@@ -18,6 +18,7 @@ namespace ELib.ViewModel
     {
         private readonly IKernel kernel;
         public ICommand OpenLoginWindowCommand { get; }
+        public ICommand OpenLoginFromRegisterWindowCommand { get; }
         public ICommand OpenRegisterWindowCommand { get; }
         public ICommand OpenMainWindowCommand { get; }
         public ICommand OpenMainPageCommand { get; }
@@ -31,6 +32,7 @@ namespace ELib.ViewModel
         public ICommand OpenReviewWindowCommand { get; }
         public ICommand CloseReviewWindowCommand { get; }
         public ICommand GoBackCommand { get; }
+        public ICommand ExitAppCommand { get; }
         public event Action ReviewWindowClosed;
         public bool IsReviewWindowClosed { get; private set; }
         private Frame NavFrame;
@@ -47,7 +49,8 @@ namespace ELib.ViewModel
             OpenAccountPageCommand = new RelayCommand(OpenAccountPage);
             OpenChosenPageCommand = new RelayCommand(OpenChosenPage);
             OpenOfflinePageCommand = new RelayCommand(OpenOfflinePage);
-            //OpenReviewWindowCommand = new RelayCommand(OpenReviewWindow);
+            OpenLoginFromRegisterWindowCommand = new RelayCommand(OpenLoginWindowFromRegister);
+            ExitAppCommand = new RelayCommand(ExitApp);
             GoBackCommand = new RelayCommand(GoBack);
             this.kernel = kernel;
         }
@@ -57,17 +60,41 @@ namespace ELib.ViewModel
 
             var loginWindow = new LoginWindow();
             loginWindow.DataContext = new LoginViewModel(this, kernel.Get<IUserService>(), kernel.Get<IUserSession>());
+            Application.Current.MainWindow = loginWindow;
             loginWindow.Show();
             var currentWindow = Window.GetWindow(NavFrame);
             currentWindow?.Close();
+            //var currentWindow = Application.Current.MainWindow;
+            //if (Application.Current.MainWindow == null)
+            //{
+            //    Application.Current.Shutdown();
+            //}
         }
 
+        private void OpenLoginWindowFromRegister(object parameter)
+        {
+
+            var loginWindow = new LoginWindow();
+            loginWindow.DataContext = new LoginViewModel(this, kernel.Get<IUserService>(), kernel.Get<IUserSession>());
+            Application.Current.MainWindow = loginWindow;
+            loginWindow.Show();
+            (parameter as Window)?.Close();
+            if (Application.Current.MainWindow == null)
+            {
+                Application.Current.Shutdown();
+            }
+        }
         private void OpenRegisterWindow(object parameter)
         {
             var registerWindow = new RegisterWindow();
             registerWindow.DataContext = new RegisterViewModel(this, kernel.Get<IUserService>(), kernel.Get<IUserSession>());
+            Application.Current.MainWindow = registerWindow;
             registerWindow.Show();
-            (parameter as Window)?.Close();
+            var currentWindow = Application.Current.MainWindow;
+            if (Application.Current.MainWindow == null)
+            {
+                Application.Current.Shutdown();
+            }
 
         }
         private void OpenMainWindow(object parameter)
@@ -75,12 +102,21 @@ namespace ELib.ViewModel
             var mainWindow = new MainWindow();
             var mainModel = new MainViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>());
             NavFrame = mainWindow.MainFrame;
+            Application.Current.MainWindow = mainWindow;
             mainWindow.DataContext = mainModel;
             var mainPage = new MainPage();
             mainPage.DataContext = new MainPageViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>());
             NavFrame.Navigate(mainPage);
             mainWindow.Show();
             (parameter as Window)?.Close();
+
+            var currentWindow = Application.Current.MainWindow;
+            //currentWindow?.Close();
+
+            //if (Application.Current.MainWindow == null)
+            //{
+            //    Application.Current.Shutdown();
+            //}
         }
         private void OpenMainPage(object parameter)
         {
@@ -129,6 +165,10 @@ namespace ELib.ViewModel
             var offlinePage = new OfflinePage();
             offlinePage.DataContext = new OfflinePageViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>());
             NavFrame.Navigate(offlinePage);
+        }
+        private void ExitApp(object parameter)
+        {
+            Application.Current.Shutdown();
         }
         public Frame GetMainFrame()
         {

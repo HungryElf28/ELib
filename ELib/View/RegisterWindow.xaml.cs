@@ -23,14 +23,6 @@ namespace ELib.View
         public RegisterWindow()
         {
             InitializeComponent();
-            this.Closing += OnWindowClosing;
-        }
-        private void OnWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (DataContext is RegisterViewModel registerViewModel && !registerViewModel.SwitchWindows)
-            {
-                Application.Current.Shutdown();
-            }
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using DTO;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace ELib.ViewModel
 {
@@ -110,14 +111,16 @@ namespace ELib.ViewModel
 
         private void OpenLoginWindow(object parameter)
         {
-            SwitchWindows = true;
-            _navigationViewModel.OpenLoginWindowCommand.Execute(parameter);
-            SwitchWindows = false;
+            _navigationViewModel.OpenLoginFromRegisterWindowCommand.Execute(parameter);
         }
         private void Register(object parameter)
         {
-            PasswordBox passwordBox = parameter as PasswordBox;
+            dynamic parameters = parameter as dynamic;
+            PasswordBox passwordBox = parameters.Password as PasswordBox;
+            PasswordBox confPasswordBox = parameters.ConfPassword as PasswordBox;
+            Window currWindow = parameters.Window as Window;
             Password = passwordBox.Password;
+            ConfirmPassword = confPasswordBox.Password;
             if (!_userService.ValidateLogin(Login))
                 {
                     SnackbarMessageQueue.Enqueue("Логин занят, придумайте новый!");
@@ -130,6 +133,12 @@ namespace ELib.ViewModel
                     }
                     else
                     {
+                    if (Password != ConfirmPassword)
+                    {
+                        SnackbarMessageQueue.Enqueue("Введённые пароли не совпадают!");
+                    }
+                    else
+                    {
                         UserDto us = new UserDto();
                         us.login = Login;
                         us.password = Password;
@@ -139,7 +148,8 @@ namespace ELib.ViewModel
                         us.reg_date = DateTime.Today;
                         us.bonuses = 0;
                         _userService.RegisterUser(us);
-                        _navigationViewModel.OpenMainWindowCommand.Execute(parameter);
+                        _navigationViewModel.OpenMainWindowCommand.Execute(currWindow);
+                    }
                     }
                 }
         }
