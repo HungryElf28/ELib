@@ -1,7 +1,9 @@
 ﻿using BLL.Services;
 using DTO;
+using ELib.View;
 using Interfaces.Services;
 using MaterialDesignThemes.Wpf;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml.Linq;
 
@@ -22,7 +25,7 @@ namespace ELib.ViewModel
         public float Price { get; set; }
         public bool IsActive { get; set; }
         public DateTime? EndDate { get; set; }
-        public Visibility ButtonVisibility => IsActive ? Visibility.Collapsed : Visibility.Visible;
+        public Visibility SetButtonVisibility => IsActive ? Visibility.Collapsed : Visibility.Visible;
         public Visibility DateVisibility => IsActive ? Visibility.Visible : Visibility.Collapsed;
     }
     public class AccountPageViewModel : INotifyPropertyChanged
@@ -34,6 +37,7 @@ namespace ELib.ViewModel
         private ObservableCollection<TariffViewModel> _tariffPreviews;
         public ICommand ChangeCommand { get; }
         public ICommand SetTariffCommand { get; }
+        public ICommand CancelTariffCommand { get; }
         public ICommand GoBackCommand { get; }
         public UserDto CurrentUser
         {
@@ -67,6 +71,7 @@ namespace ELib.ViewModel
             CurrentUser = userSession.CurrentUser;
             ChangeCommand = new RelayCommand(ValidateChanges);
             SetTariffCommand = new RelayCommand(SetTariff);
+            CancelTariffCommand = new RelayCommand(CancelTariff);
             GoBackCommand = new RelayCommand(GoBack);
             TariffPreviews = new ObservableCollection<TariffViewModel>();
             LoadTariffs();
@@ -108,7 +113,19 @@ namespace ELib.ViewModel
         private void SetTariff(object parameter)
         {
             var tariff = parameter as TariffViewModel;
+            var bonusWindow = new BonusDialogWindow();
+            Frame NavFrame = _navigationViewModel.GetMainFrame();
+            bonusWindow.DataContext = new BonusDialogViewModel(this, _userSession, _tariffService);
+            bonusWindow.Owner = Window.GetWindow(NavFrame);
+            bonusWindow.ShowDialog();
             _tariffService.SetTariff(CurrentUser.id, tariff.Id);
+            CurrentUser = _userSession.CurrentUser;
+            LoadTariffs();
+        }
+        private void CancelTariff(object parameter)
+        {
+            var tariff = parameter as TariffViewModel;
+            _tariffService.CancelTariff(CurrentUser.id, tariff.Id);
             LoadTariffs();
         }
         private void GoBack(object parameter)

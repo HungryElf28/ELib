@@ -7,8 +7,7 @@
       xmlns:materialDesignIcons="http://materialdesigninxaml.net/winfx/xaml/materialdesignicons"
       mc:Ignorable="d"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      FontFamily="{DynamicResource MaterialDesignFont}"
-       d:DesignHeight="650" d:DesignWidth="1000">
+      FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -116,6 +115,58 @@
 
                         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                             <ItemsControl ItemsSource="{Binding RecList}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Width="120" Margin="5">
+                                            <Image Source="{Binding coverLink}" Height="150" VerticalAlignment="Top" />
+                                            <Button Content="{Binding bookTitle}" Command="{Binding DataContext.OpenBookPageCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}" VerticalAlignment="Top"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </StackPanel>
+                    <StackPanel>
+                        <StackPanel.Style>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding HasReadings}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                        <TextBlock Text="Вы читали" FontSize="16" FontWeight="Bold" Margin="0, 0, 0, 10"/>
+
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                            <ItemsControl ItemsSource="{Binding ReadList}">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <StackPanel Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Width="120" Margin="5">
+                                            <Image Source="{Binding coverLink}" Height="150" VerticalAlignment="Top" />
+                                            <Button Content="{Binding bookTitle}" Command="{Binding DataContext.OpenBookPageCommand, RelativeSource={RelativeSource AncestorType=Page}}" CommandParameter="{Binding}" VerticalAlignment="Top"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ScrollViewer>
+                    </StackPanel>
+                    <StackPanel>
+                        <TextBlock Text="Топ-10 лучших" FontSize="16" FontWeight="Bold" Margin="0, 0, 0, 10"/>
+
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                            <ItemsControl ItemsSource="{Binding TopList}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Horizontal" />

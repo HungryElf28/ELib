@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ELib.View"
+        xmlns:conv ="clr-namespace:ELib.Converters"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="BookWindow" Height="650" Width="1000">
+        Title="BookWindow">
     <Page.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="20"/>
@@ -17,6 +18,7 @@
         <Style x:Key="NameStyle" TargetType="TextBlock" BasedOn="{StaticResource {x:Type TextBlock}}">
             <Setter Property="Margin" Value="10,0,0,0" />
         </Style>
+        <conv:StarConverter x:Key="starConverter" />
     </Page.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -60,6 +62,21 @@
                 <TextBlock Text="Жанр:" FontWeight="Bold"/>
                 <TextBlock Text="{ Binding CurrentBook.genreName}" Style="{StaticResource NameStyle}" />
                 <TextBlock Text="{Binding RatingText}" />
+                <ItemsControl ItemsSource="{Binding RatingStars}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <materialDesign:PackIcon Kind="{Binding Icon}" 
+                                     Width="24" 
+                                     Height="24" 
+                                     Foreground="Gold" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
                 <TextBlock Text="{Binding CurrentBook.description}"/>
                 <TextBlock Text="Отзывы:" FontWeight="Bold" Margin="0,20,0,10" />
                 <ItemsControl ItemsSource="{Binding ReviewList}">

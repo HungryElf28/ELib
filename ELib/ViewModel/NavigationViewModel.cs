@@ -32,6 +32,7 @@ namespace ELib.ViewModel
         public ICommand CloseReviewWindowCommand { get; }
         public ICommand GoBackCommand { get; }
         public event Action ReviewWindowClosed;
+        public bool IsReviewWindowClosed { get; private set; }
         private Frame NavFrame;
         public NavigationViewModel(IKernel kernel)
         {
@@ -46,8 +47,7 @@ namespace ELib.ViewModel
             OpenAccountPageCommand = new RelayCommand(OpenAccountPage);
             OpenChosenPageCommand = new RelayCommand(OpenChosenPage);
             OpenOfflinePageCommand = new RelayCommand(OpenOfflinePage);
-            OpenReviewWindowCommand = new RelayCommand(OpenReviewWindow);
-            CloseReviewWindowCommand = new RelayCommand(CloseReviewWindow);
+            //OpenReviewWindowCommand = new RelayCommand(OpenReviewWindow);
             GoBackCommand = new RelayCommand(GoBack);
             this.kernel = kernel;
         }
@@ -91,7 +91,7 @@ namespace ELib.ViewModel
         private void OpenBookPage(object parameter)
         {
             var bookPage = new BookPage();
-            bookPage.DataContext = new BookPageViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>(), kernel.Get<ITariffService>());
+            bookPage.DataContext = new BookPageViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>(), kernel.Get<ITariffService>(), kernel);
             NavFrame.Navigate(bookPage);
         }
         private void OpenReadPage(object parameter)
@@ -130,18 +130,9 @@ namespace ELib.ViewModel
             offlinePage.DataContext = new OfflinePageViewModel(this, kernel.Get<IBookService>(), kernel.Get<IUserSession>());
             NavFrame.Navigate(offlinePage);
         }
-        private void OpenReviewWindow(object parameter)
+        public Frame GetMainFrame()
         {
-
-            var reviewWindow = new MakeReviewWindow();
-            reviewWindow.DataContext = new MakeReviewViewModel(this, kernel.Get<IUserSession>(), kernel.Get<IBookService>(), kernel.Get<IReviewService>());
-            reviewWindow.Owner = Window.GetWindow(NavFrame);
-            reviewWindow.Closed += (s, e) => ReviewWindowClosed?.Invoke();
-            reviewWindow.ShowDialog();
-        }
-        private void CloseReviewWindow(object parameter)
-        {
-            (parameter as Window)?.Close();
+            return NavFrame;
         }
         private void GoBack(object parameter)
         {

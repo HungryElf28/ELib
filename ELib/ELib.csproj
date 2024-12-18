@@ -133,6 +133,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\ParameterConverter.cs" />
+    <Compile Include="Converters\StarConverter.cs" />
     <Compile Include="Converters\StringToIntConverter.cs" />
     <Compile Include="Util\NinjectRegistrations.cs" />
     <Compile Include="Util\ReposModule.cs" />
@@ -153,9 +154,6 @@
     <Compile Include="ViewModel\RelayCommand.cs" />
     <Compile Include="View\BonusDialogWindow.xaml.cs">
       <DependentUpon>BonusDialogWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\MakeFeedbackWindow.xaml.cs">
-      <DependentUpon>MakeFeedbackWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MakeReviewWindow.xaml.cs">
       <DependentUpon>MakeReviewWindow.xaml</DependentUpon>
@@ -183,9 +181,6 @@
     </Compile>
     <Compile Include="View\Pages\ReadPage.xaml.cs">
       <DependentUpon>ReadPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Pages\SearchPage.xaml.cs">
-      <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ReadWindow.xaml.cs">
       <DependentUpon>ReadWindow.xaml</DependentUpon>
@@ -220,10 +215,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="View\MakeFeedbackWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\MakeReviewWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -257,10 +248,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\ReadPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Pages\SearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

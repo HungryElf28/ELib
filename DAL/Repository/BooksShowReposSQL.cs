@@ -78,7 +78,7 @@ namespace DAL.Repository
                 .Where(b => userReadBooks.Contains(b.id))
                 .GroupBy(b => b.genreid)
                 .OrderByDescending(g => g.Count())
-                .Take(2)
+                .Take(3)
                 .Select(g => g.Key)
                 .ToList();
 
@@ -129,6 +129,35 @@ namespace DAL.Repository
                          )
                 .ToList();
             return results;
+        }
+        public List<BookPreviewDto> GetTopBooks()
+        {
+            var topBooks = db.books
+                .OrderByDescending(b => b.rating ?? 0)
+                .Take(10)
+                .Select(b => new BookPreviewDto
+                {
+                    id = b.id,
+                    bookTitle = b.bookTitle,
+                    coverLink = b.coverLink
+                })
+                .ToList();
+            return topBooks;
+        }
+        public List<BookPreviewDto> GetReadBooks(int usId)
+        {
+            var userReadBooks = db.reading_book
+                .Where(rb => rb.user_id == usId)
+                .OrderByDescending(rb => rb.last_date)
+                .Take(10)
+                .Select(rb => new BookPreviewDto
+                {
+                    id = rb.book_id,
+                    bookTitle = rb.books.bookTitle,
+                    coverLink = rb.books.coverLink
+                })
+                .ToList();
+            return userReadBooks;
         }
 
     }

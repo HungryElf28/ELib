@@ -29,6 +29,8 @@ namespace ELib.ViewModel
         private ObservableCollection<MainBooksListDto> _mainBooksList;
         private ObservableCollection<BookPreviewDto> _recList;
         private ObservableCollection<SearchResultDto> _srchList;
+        private ObservableCollection<BookPreviewDto> _readList;
+        private ObservableCollection<BookPreviewDto> _topList;
         private SearchResultDto _selectedResult;
         private string _srchText;
         private string _userLogin;
@@ -69,6 +71,24 @@ namespace ELib.ViewModel
                 NotifyPropertyChanged(nameof(SearchList));
             }
         }
+        public ObservableCollection<BookPreviewDto> ReadList
+        {
+            get => _readList;
+            private set
+            {
+                _readList = value;
+                NotifyPropertyChanged(nameof(ReadList));
+            }
+        }
+        public ObservableCollection<BookPreviewDto> TopList
+        {
+            get => _topList;
+            private set
+            {
+                _topList = value;
+                NotifyPropertyChanged(nameof(TopList));
+            }
+        }
         public SearchResultDto SelectedResult
         {
             get => _selectedResult;
@@ -99,6 +119,10 @@ namespace ELib.ViewModel
         public bool HasRecommends
         {
             get => RecList != null && RecList.Any();
+        }
+        public bool HasReadings
+        {
+            get => ReadList != null && ReadList.Any();
         }
         public MainPageViewModel(NavigationViewModel navigationViewModel, IBookService bookService, IUserSession userSession)
         {
@@ -136,9 +160,11 @@ namespace ELib.ViewModel
                     ListBookPreviews = books
                 });
             }
+            TopList = new ObservableCollection<BookPreviewDto>(_bookService.GetTopList());
             if (IsAuthenticated)
             {
                 RecList = new ObservableCollection<BookPreviewDto>(_bookService.GetRecList(_userSession.CurrentUser.id));
+                ReadList = new ObservableCollection<BookPreviewDto>(_bookService.GetLastReadingList(_userSession.CurrentUser.id));
             }
         }
         private void UpdateSearchList(string searchText)

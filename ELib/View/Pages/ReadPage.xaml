@@ -6,7 +6,6 @@
       xmlns:local="clr-namespace:ELib.View"
       xmlns:conv ="clr-namespace:ELib.Converters"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="1000"
       FontFamily="{DynamicResource MaterialDesignFont}"
       Title="ReadPage">
     <Page.Resources>

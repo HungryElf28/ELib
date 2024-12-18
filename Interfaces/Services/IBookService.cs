@@ -38,5 +38,7 @@ namespace Interfaces.Services
         List<BookPreviewDto> GetRecList(int usId);
         List<BookPreviewDto> GetChosenList(int usId);
         List<BookPreviewDto> GetOfflineList(int usId);
+        List<BookPreviewDto> GetLastReadingList(int usId);
+        List<BookPreviewDto> GetTopList();
     }
 }

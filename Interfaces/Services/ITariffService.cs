@@ -11,6 +11,7 @@ namespace Interfaces.Services
     {
         bool CheckTariff(int bkId, int usId);
         void SetTariff(int usId, int trId);
+        void CancelTariff(int usId, int trId);
         List<TariffPreview> GetTariffPreviews(int usId);
     }
 }

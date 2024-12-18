@@ -6,7 +6,6 @@
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:ELib.View.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="650" d:DesignWidth="1000"
       Title="AccountPage">
 
     <Grid>
@@ -59,8 +58,13 @@
                                 <TextBlock Text="{Binding Price, StringFormat='Цена: {0} у.е.'}" FontSize="14"/>
 
                                 <Button Content="Оформить" 
-                                        Visibility="{Binding ButtonVisibility}" 
+                                        Visibility="{Binding SetButtonVisibility}" 
                                         Command="{Binding DataContext.SetTariffCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                        CommandParameter="{Binding}"
+                                        HorizontalAlignment="Center"/>
+                                <Button Content="Отменить" 
+                                        Visibility="{Binding DateVisibility}" 
+                                        Command="{Binding DataContext.CancelTariffCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                         CommandParameter="{Binding}"
                                         HorizontalAlignment="Center"/>
 

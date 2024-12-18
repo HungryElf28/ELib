@@ -46,6 +46,12 @@ namespace DAL.Repository
             db.user_tariff.Add(ut);
             db.SaveChanges();
         }
+        public void RemoveUserTariff(int usId, int trId)
+        {
+           var ut = db.user_tariff.Find(usId, trId);
+            db.user_tariff.Remove(ut);
+            db.SaveChanges();
+        }
         public void RemoveExpiredTariffs(int usId)
         {
             var expiredTariffs = db.user_tariff

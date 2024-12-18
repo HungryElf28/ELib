@@ -149,6 +149,18 @@ namespace BLL.Services
         {
             return db.showBooks.GetTopBooksByAuthorName(AuthorId, count);
         }
+        public List<BookPreviewDto> GetRecList(int usId)
+        {
+            return db.showBooks.GetRecomendationList(usId);
+        }
+        public List<BookPreviewDto> GetLastReadingList(int usId)
+        {
+            return db.showBooks.GetReadBooks(usId);
+        }
+        public List<BookPreviewDto> GetTopList()
+        {
+            return db.showBooks.GetTopBooks();
+        }
         public List<GenreDto> GetGenres()
         {
             return db.genres.GetAll().AsEnumerable().Select(genre => new GenreDto(genre)).ToList();
@@ -160,10 +172,6 @@ namespace BLL.Services
         public List<ReviewDto> GetReviews(int bkId)
         {
             return db.bookReviews.GetBookReviews(bkId).Where(rv => rv.mark != null).ToList();
-        }
-        public List<BookPreviewDto> GetRecList(int usId)
-        {
-            return db.showBooks.GetRecomendationList(usId);
         }
         public List<BookPreviewDto> GetChosenList(int usId)
         {

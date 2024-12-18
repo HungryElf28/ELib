@@ -28,6 +28,7 @@ namespace BLL.Services
 
             var readingBook = db.reading.GetReadingStatus(CurrentReading.user_id, CurrentReading.book_id);
             readingBook.current_page = page;
+            readingBook.last_date = DateTime.Now;
             db.Save();
         }
 

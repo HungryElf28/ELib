@@ -38,7 +38,8 @@ Background="#8EEC6A" HorizontalContentAlignment="Center" VerticalAlignment="Stre
         <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center">
             <Button Content="Сохранить Отзыв" Margin="5" Command="{Binding SaveReviewCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Stretch" />
             <Button Content="Удалить отзыв" Margin="5" Command="{Binding DeleteReviewCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Stretch" />
-            <Button Content="Отмена" Margin="5" Command="{Binding ExitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Stretch" />
+            <Button Content="Отменить изменения" Margin="5" Command="{Binding CancelChangesCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Stretch" />
+            <Button Content="Выйти" Margin="5" Command="{Binding ExitCommand}" CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=Window}}" HorizontalAlignment="Stretch" />
         </StackPanel>
     </Grid>
 </Window>

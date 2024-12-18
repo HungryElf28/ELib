@@ -14,6 +14,7 @@ namespace Interfaces.Services
         bool IsAuthenticated { get; set; }
         void ClearSession();
         void AuthenticateUser(users user);
+        void SpareBonuses(int bn);
         bool ValidateLogin(int id, string login);
         bool ValidateEmail(int id, string email);
         void UpdateUser(UserDto user);

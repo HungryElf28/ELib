@@ -24,6 +24,7 @@ namespace DAL.Repository
                 rb.user_id = usId;
                 rb.book_id = bkId;
                 rb.current_page = 0;
+                rb.last_date = DateTime.Now;
                 rb.users = db.users.Find(usId);
                 rb.books= db.books.Find(bkId);
                 db.reading_book.Add(rb);

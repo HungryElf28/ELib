@@ -52,6 +52,14 @@ namespace BLL.Services
             db.Save();
             CurrentUser = user;
         }
+        public void SpareBonuses(int bn)
+        {
+            var CurrUser = db.users.GetAll().FirstOrDefault(u => u.id == CurrentUser.id);
+            CurrUser.bonuses -= bn;
+            db.users.Update(CurrUser);
+            db.Save();
+            CurrentUser = new UserDto(CurrUser);
+        }
         public bool ValidateLogin( int id, string login)
         {
             return !db.users.GetAll().Any(u => u.login == login && u.id != id);

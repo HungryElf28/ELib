@@ -33,6 +33,12 @@ namespace BLL.Services
         public void SetTariff(int usId, int trId)
         {
             db.userTariff.SetUserTariff(usId, trId);
+            db.Save();
+        }
+        public void CancelTariff(int usId, int trId)
+        {
+            db.userTariff.RemoveUserTariff(usId, trId);
+            db.Save();
         }
         public List<TariffPreview> GetTariffPreviews(int usId)
         {

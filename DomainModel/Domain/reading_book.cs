@@ -20,6 +20,7 @@ namespace DomainModel
         public int book_id { get; set; }
 
         public int current_page { get; set; }
+        public DateTime last_date { get; set; }
 
         public virtual books books { get; set; }
 

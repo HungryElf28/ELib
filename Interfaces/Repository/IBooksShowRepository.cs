@@ -15,5 +15,8 @@ namespace Interfaces.Repository
         List<BookPreviewDto> GetAllBooksByAuthorName(int authorID);
         List<BookPreviewDto> GetTopBooksByAuthorName(int authorID, int count);
         List<SearchResultDto> GetSearchResults(string query);
+        List<BookPreviewDto> GetTopBooks();
+        List<BookPreviewDto> GetReadBooks(int usId);
+
     }
 }

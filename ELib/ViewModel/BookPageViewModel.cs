@@ -1,5 +1,7 @@
 ﻿using DTO;
+using ELib.View;
 using Interfaces.Services;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,12 +9,21 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Controls;
+using MaterialDesignThemes.Wpf;
+using System.Windows.Media;
 
 namespace ELib.ViewModel
 {
+    public class StarItem
+    {
+        public PackIconKind Icon { get; set; }
+    }
     public class BookPageViewModel : INotifyPropertyChanged
     {
+        private readonly IKernel kernel;
         private IBookService _bookService;
         private IUserSession _userSession;
         private ITariffService _tariffService;
@@ -110,8 +121,33 @@ namespace ELib.ViewModel
         {
             get => CurrentBook.rating.HasValue ? $"Рейтинг: {CurrentBook.rating:F1}/5" : "Рейтинг: отсутствует";
         }
+        //public ObservableCollection<StarState> RatingStars
+        //{
+        //    get
+        //    {
+        //        if (CurrentBook.rating.HasValue)
+        //        {
+
+        //            double rating = CurrentBook.rating.Value;
+        //            var stars = new List<StarState>();
+
+        //            for (int i = 1; i <= 5; i++)
+        //            {
+        //                if (i <= rating)
+        //                    stars.Add(StarState.Full);
+        //                else if (i - 1 < rating && rating < i)
+        //                    stars.Add(StarState.Half);
+        //                else
+        //                    stars.Add(StarState.Empty);
+        //            }
+
+        //            return new ObservableCollection<StarState>(stars);
+        //        }
+        //        return new ObservableCollection<StarState>(Enumerable.Repeat(StarState.Empty, 5));
+        //    }
+        //}
         public event PropertyChangedEventHandler PropertyChanged;
-        public BookPageViewModel(NavigationViewModel navigationViewModel, IBookService bookService, IUserSession userSession, ITariffService tariffService)
+        public BookPageViewModel(NavigationViewModel navigationViewModel, IBookService bookService, IUserSession userSession, ITariffService tariffService, IKernel kernel)
         {
             GoBackCommand = new RelayCommand(GoBack);
             ReadBookCommand = new RelayCommand(ReadBook);
@@ -122,19 +158,47 @@ namespace ELib.ViewModel
             _userSession = userSession;
             _tariffService = tariffService;
             _navigationViewModel = navigationViewModel;
-            _navigationViewModel.ReviewWindowClosed += LoadReviews;
             CurrentBook = bookService.CurrentBook;
             IsBookAccessible = _tariffService.CheckTariff(CurrentBook.id, _userSession.CurrentUser.id);
             IsBookChosen = _bookService.GetChosenStatus(_userSession.CurrentUser.id, CurrentBook.id);
             IsBookOffline = _bookService.GetOfflineStatus(_userSession.CurrentUser.id, CurrentBook.id);
             LoadReviews();
+            this.kernel = kernel;
         }
         private void LoadReviews()
         {
             _bookService.UpdateCurrentBookRating();
             CurrentBook = _bookService.CurrentBook;
             NotifyPropertyChanged(nameof(RatingText));
+            UpdateRatingStars();
             ReviewList = _bookService.GetReviews(CurrentBook.id);
+        }
+        public ObservableCollection<StarItem> RatingStars { get; } = new ObservableCollection<StarItem>();
+        private void UpdateRatingStars()
+        {
+            RatingStars.Clear();
+            if (CurrentBook.rating != null)
+            {
+                int fullStars = (int)CurrentBook.rating;
+
+                bool hasHalfStar = CurrentBook.rating - fullStars >= 0.5;
+
+                for (int i = 0; i < fullStars; i++)
+                {
+                    RatingStars.Add(new StarItem { Icon = PackIconKind.Star });
+                }
+
+                if (hasHalfStar)
+                {
+                    RatingStars.Add(new StarItem { Icon = PackIconKind.StarHalf });
+                }
+
+                int emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+                for (int i = 0; i < emptyStars; i++)
+                {
+                    RatingStars.Add(new StarItem { Icon = PackIconKind.StarOutline });
+                }
+            }
         }
         private void GoBack(object parameter)
         {
@@ -158,8 +222,12 @@ namespace ELib.ViewModel
         }
         private void OpenReview(object parameter)
         {
-
-            _navigationViewModel.OpenReviewWindowCommand.Execute(parameter);
+            var reviewWindow = new MakeReviewWindow();
+            Frame NavFrame = _navigationViewModel.GetMainFrame();
+            reviewWindow.DataContext = new MakeReviewViewModel(this, _userSession, _bookService, kernel.Get<IReviewService>());
+            reviewWindow.Owner = Window.GetWindow(NavFrame);
+            reviewWindow.ShowDialog();
+            LoadReviews();
         }
         private void NotifyPropertyChanged(string propertyName)
         {
@@ -168,5 +236,11 @@ namespace ELib.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+    public enum StarState
+    {
+        Empty,
+        Half,
+        Full
     }
 }
